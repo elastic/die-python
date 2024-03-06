@@ -42,6 +42,6 @@ NB_MODULE(_die, m)
                     return std::nullopt;
                 return std::string(res);
             })
-        // .def("freeMemoryA", DIE_lib::freeMemoryA, "pszString"_a)
+        // .def("freeMemoryA", DIE_lib::freeMemoryA, "pszString"_a) // uncessary?
         ;
 }

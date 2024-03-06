@@ -15,6 +15,12 @@ class ScanFlags(enum.IntFlag):
     SF_RESULTASTSV = _SF.SF_RESULTASTSV
     SF_RESULTASCSV = _SF.SF_RESULTASCSV
 
+    def __str__(self) -> str:
+        return self.name.replace("SF_", "")
+
+    def __repr__(self) -> str:
+        return self.name
+
 
 def scan_file(file: str, flags: ScanFlags, database: str) -> Optional[str]:
     """Scan the given file"""

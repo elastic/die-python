@@ -20,13 +20,6 @@ execute_process(
 list(APPEND CMAKE_PREFIX_PATH "${NB_DIR}")
 
 find_package(nanobind CONFIG REQUIRED)
-
-list(APPEND QT_BUILD_SUBMODULES qtbase)
-find_package(Qt6 REQUIRED)
-
-# qt_standard_project_setup()
-
-
 find_package(DieLibrary REQUIRED)
 
 set(DIE_PYTHON_ROOT_DIR ${DIE_ROOT_DIR}/python)
@@ -43,6 +36,7 @@ nanobind_add_module(
 # target_link_directories(_die PRIVATE $<TARGET_PROPERTY:DieLibrary,LINK_DIRECTORIES>)
 
 target_compile_definitions(_die PRIVATE)
+# add_dependencies(_die Qt5::Core)
 target_include_directories(
     _die
     PRIVATE
@@ -50,6 +44,10 @@ target_include_directories(
         ${DIE_BASE_ROOT}/include
         ${DIE_BASE_ROOT}/die_script
         ${DIE_PYTHON_ROOT_DIR}/inc
+        ${qt5_SOURCE_DIR}
+        # $<TARGET_PROPERTY:${qt5_SOURCE_DIR},INCLUDE_DIRECTORIES>
+        # ${qt6_SOURCE_DIR}
+        # $<TARGET_PROPERTY:${qt6_SOURCE_DIR},INCLUDE_DIRECTORIES>
 )
 target_link_directories(_die PRIVATE ${DIE_BASE_ROOT}/lib_source)
 

@@ -1,5 +1,10 @@
 include( FetchContent )
 
+# find_package(Qt6 REQUIRED COMPONENTS Core)
+# qt_standard_project_setup()
+
+find_package(Qt5 REQUIRED COMPONENTS Core)
+
 FetchContent_Declare(
   DieLibrary
   GIT_REPOSITORY "https://github.com/horsicq/die_library"
