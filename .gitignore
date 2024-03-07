@@ -1,2 +1,5 @@
 build*/
 python/inc/constants.hpp
+__pycache__
+.pytest_cache
+*.pyc

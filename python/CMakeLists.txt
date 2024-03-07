@@ -30,26 +30,20 @@ nanobind_add_module(
     ./src/die.cpp
 )
 
-# TODO: create a proper build target for DieLibrary
-# target_compile_definitions(_die PRIVATE $<TARGET_PROPERTY:DieLibrary,COMPILE_DEFINITIONS>)
-# target_include_directories(_die PRIVATE $<TARGET_PROPERTY:DieLibrary,INCLUDE_DIRECTORIES> ./inc)
-# target_link_directories(_die PRIVATE $<TARGET_PROPERTY:DieLibrary,LINK_DIRECTORIES>)
 
 target_compile_definitions(_die PRIVATE)
 # add_dependencies(_die Qt5::Core)
 target_include_directories(
     _die
     PRIVATE
-        ${DIE_BASE_ROOT}/lib_source
-        ${DIE_BASE_ROOT}/include
-        ${DIE_BASE_ROOT}/die_script
+        ${DIE_BASE_ROOT}
         ${DIE_PYTHON_ROOT_DIR}/inc
-        ${qt5_SOURCE_DIR}
+        # ${qt5_SOURCE_DIR}
         # $<TARGET_PROPERTY:${qt5_SOURCE_DIR},INCLUDE_DIRECTORIES>
         # ${qt6_SOURCE_DIR}
         # $<TARGET_PROPERTY:${qt6_SOURCE_DIR},INCLUDE_DIRECTORIES>
 )
-target_link_directories(_die PRIVATE ${DIE_BASE_ROOT}/lib_source)
+target_link_directories(_die PRIVATE ${DIE_BASE_ROOT})
 
 if(MSVC)
     target_link_libraries(_die PRIVATE die.lib)
@@ -65,3 +59,11 @@ endif()
 
 install(DIRECTORY die DESTINATION .)
 install(TARGETS _die LIBRARY DESTINATION die)
+install(DIRECTORY ${DIE_BASE_ROOT}/db DESTINATION die)
+install(FILES
+    ${DIE_BASE_ROOT}/die.h
+    ${DIE_BASE_ROOT}/die.dll
+    ${DIE_BASE_ROOT}/Qt5Core.dll
+    ${DIE_BASE_ROOT}/Qt5Script.dll
+    DESTINATION die
+)

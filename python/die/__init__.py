@@ -1,27 +1,22 @@
-import enum
+import pathlib
 from typing import Optional
-from ._die import DIE_libdie as _DIE_libdie
-from ._die import SF as _SF
+from ._die import DieFlags as ScanFlags
+from ._die import ScanFileA as _ScanFileA
+from ._die import __version__
+from . import __package__
+
+version_major, version_minor, version_patch = map(int, __version__.split("."))
+
+database_path = pathlib.Path(__path__[0]) / "db"
 
 
-class ScanFlags(enum.IntFlag):
-    SF_DEEPSCAN = _SF.SF_DEEPSCAN
-    SF_HEURISTICSCAN = _SF.SF_HEURISTICSCAN
-    SF_ALLTYPESSCAN = _SF.SF_ALLTYPESSCAN
-    SF_RECURSIVESCAN = _SF.SF_RECURSIVESCAN
-    SF_VERBOSE = _SF.SF_VERBOSE
-    SF_RESULTASXML = _SF.SF_RESULTASXML
-    SF_RESULTASJSON = _SF.SF_RESULTASJSON
-    SF_RESULTASTSV = _SF.SF_RESULTASTSV
-    SF_RESULTASCSV = _SF.SF_RESULTASCSV
-
-    def __str__(self) -> str:
-        return self.name.replace("SF_", "")
-
-    def __repr__(self) -> str:
-        return self.name
-
-
-def scan_file(file: str, flags: ScanFlags, database: str) -> Optional[str]:
-    """Scan the given file"""
-    return _DIE_libdie().scanFile(file, flags, database)
+def scan_file(
+    filepath: pathlib.Path, flags: ScanFlags, database: pathlib.Path
+) -> Optional[str]:
+    """Scan the given file against the signature database"""
+    assert filepath.exists()
+    assert database.exists()
+    res = _ScanFileA(str(filepath.absolute()), flags, str(database.absolute()))
+    if not res:
+        return None
+    return res.strip()
