@@ -54,6 +54,12 @@ SetSitePackagePath(std::filesystem::path p)
 }
 
 const std::filesystem::path
+GetSitePackagePath()
+{
+    return SitePackagePath;
+}
+
+const std::filesystem::path
 DieDll()
 {
     if ( std::filesystem::exists(SitePackagePath) == false )
@@ -183,6 +189,7 @@ NB_MODULE(_die, m)
     m.doc()               = "The native `die` module";
     m.attr("__version__") = "0.1.0";
 
+    m.def("GetSitePackagePath", &DIE::GetSitePackagePath);
     m.def("SetSitePackagePath", &DIE::SetSitePackagePath);
     m.def("ScanFileA", DIE::ScanFileA);
     m.def("ScanFileW", DIE::ScanFileW);
