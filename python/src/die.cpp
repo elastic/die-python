@@ -1,6 +1,7 @@
 #include "die.hpp"
 
 #include <nanobind/nanobind.h>
+#include <nanobind/stl/filesystem.h>
 #include <nanobind/stl/optional.h>
 #include <nanobind/stl/string.h>
 
@@ -9,12 +10,6 @@
 #include <functional>
 #include <memory>
 #include <string_view>
-
-const std::filesystem::path SitePackagePath =
-    "C:\\Users\\chris\\AppData\\Roaming\\Python\\Python312\\site-packages\\die";
-const std::filesystem::path DieDll       = SitePackagePath / "die.dll";
-const std::filesystem::path Qt5ScriptDll = SitePackagePath / "qt5script.dll";
-const std::filesystem::path Qt5CoreDll   = SitePackagePath / "qt5core.dll";
 
 namespace nb = nanobind;
 using namespace nb::literals;
@@ -34,7 +29,7 @@ using GenericHandle = std::unique_ptr<
 
 #ifdef __linux__
 using UniqueHandle = GenericHandle<FILE, ::fclose>;
-using UniqueModule = GenericHandle<FILE, ::dlclose>;
+using UniqueModule = GenericHandle<int, ::dlclose>;
 #else
 using UniqueHandle = GenericHandle<void, ::CloseHandle>;
 using UniqueModule = GenericHandle<HINSTANCE__, [](auto x) {}>;
@@ -50,6 +45,39 @@ using OriginalVB_ScanFile_Sig =
 namespace DIE
 {
 
+std::filesystem::path SitePackagePath;
+
+void
+SetSitePackagePath(std::filesystem::path p)
+{
+    SitePackagePath = std::move(p);
+}
+
+const std::filesystem::path
+DieDll()
+{
+    if ( std::filesystem::exists(SitePackagePath) == false )
+        throw std::runtime_error("SitePackagePath is invalid");
+    return SitePackagePath / "die.dll";
+}
+
+const std::filesystem::path
+Qt5ScriptDll()
+{
+    if ( std::filesystem::exists(SitePackagePath) == false )
+        throw std::runtime_error("SitePackagePath is invalid");
+    return SitePackagePath / "qt5script.dll";
+}
+
+const std::filesystem::path
+Qt5CoreDll()
+{
+    if ( std::filesystem::exists(SitePackagePath) == false )
+        throw std::runtime_error("SitePackagePath is invalid");
+    return SitePackagePath / "qt5core.dll";
+}
+
+
 std::array<void*, 5> __FunctionPointers;
 
 void
@@ -60,9 +88,9 @@ Init()
         return;
     }
 
-    const UniqueModule hQtCoreMod {::LoadLibraryA(Qt5CoreDll.string().c_str())};
-    const UniqueModule hQtScriptMod {::LoadLibraryA(Qt5ScriptDll.string().c_str())};
-    const UniqueModule hDieMod {::LoadLibraryA(DieDll.string().c_str())};
+    const UniqueModule hQtCoreMod {::LoadLibraryA(Qt5CoreDll().string().c_str())};
+    const UniqueModule hQtScriptMod {::LoadLibraryA(Qt5ScriptDll().string().c_str())};
+    const UniqueModule hDieMod {::LoadLibraryA(DieDll().string().c_str())};
     if ( !hDieMod )
     {
         printf("[CRITICAL] LoadLibraryA() failed, GLE=%#x\n", ::GetLastError());
@@ -155,6 +183,7 @@ NB_MODULE(_die, m)
     m.doc()               = "The native `die` module";
     m.attr("__version__") = "0.1.0";
 
+    m.def("SetSitePackagePath", &DIE::SetSitePackagePath);
     m.def("ScanFileA", DIE::ScanFileA);
     m.def("ScanFileW", DIE::ScanFileW);
     m.def("FreeMemoryA", DIE::FreeMemoryA);

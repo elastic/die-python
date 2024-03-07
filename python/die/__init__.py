@@ -3,11 +3,14 @@ from typing import Optional
 from ._die import DieFlags as ScanFlags
 from ._die import ScanFileA as _ScanFileA
 from ._die import __version__
+from ._die import SetSitePackagePath as _SetSitePackagePath
 from . import __package__
 
 version_major, version_minor, version_patch = map(int, __version__.split("."))
-
 database_path = pathlib.Path(__path__[0]) / "db"
+"""Path to the DIE signature database"""
+
+_SetSitePackagePath(pathlib.Path(__path__[0]))
 
 
 def scan_file(
