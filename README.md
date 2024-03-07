@@ -7,3 +7,39 @@
 Python3 bindings for [@horsicq](https://github.com/horsicq/)'s [Detect-It-Easy](https://github.com/horsicq/Detect-It-Easy)
 
 Currently works on Windows only
+
+
+## Install
+
+### From PIP
+
+TODO
+
+```
+```
+
+### From Github
+
+```console
+python -m pip install -e "git+https://github.com/calladoum-elastic/die-python.git/#egg=die-python"
+```
+
+### Using Git
+
+```console
+git clone https://github.com/calladoum-elastic/die-python
+python -m pip install die-python
+```
+
+## Usage
+
+```python
+import die, pathlib
+
+result = die.scan_file(
+        pathlib.Path("c:/windows/system32/ntdll.dll"),
+        die.ScanFlags.Deepscan,
+        die.database_path / "PE/UPX lock.2.sg"
+)
+assert result is not None
+```
