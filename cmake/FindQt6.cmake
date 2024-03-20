@@ -10,8 +10,8 @@ set(QT_VERSION_PATCH ${QT6_VERSION_PATCH})
 
 FetchContent_Declare(
     Qt6
-    # URL https://download.qt.io/official_releases/qt/6.6/6.6.2/single/qt-everywhere-src-6.6.2.zip
-    URL http://localhost:8000/qt-everywhere-src-6.6.2.zip
+    URL https://download.qt.io/official_releases/qt/6.6/6.6.2/single/qt-everywhere-src-6.6.2.zip
+    # URL http://localhost:8000/qt-everywhere-src-6.6.2.zip
     URL_HASH SHA1=e0f6a12c7c93ee9bda2597f63a763131f4727cd2
     CONFIGURE_COMMAND "./configure.bat"
 )
