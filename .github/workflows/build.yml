@@ -50,9 +50,9 @@ jobs:
       run: |
         echo "NB_CPU=$(grep -c ^processor /proc/cpuinfo)" >> $GITHUB_ENV
         sudo apt-get -y update
-        sudo apt install -y g++ ninja-build
-        echo CC=gcc >> $GITHUB_ENV
-        echo CXX=g++ >> $GITHUB_ENV
+        sudo apt install -y g++ ninja-build qt6-tools-dev clang
+        echo CC=clang >> $GITHUB_ENV
+        echo CXX=clang++ >> $GITHUB_ENV
 
     - name: Environment Setup (MacOS)
       if: matrix.variant.os == 'macos-latest'
