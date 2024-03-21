@@ -55,6 +55,7 @@ if(UNIX)
 endif()
 
 install(DIRECTORY die DESTINATION .)
-install(TARGETS _die die DESTINATION die/)
+install(TARGETS _die DESTINATION die/)
+install(TARGETS die DESTINATION die/ EXCLUDE_FROM_ALL)
 install (DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die/db)
 install (DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die/db)
