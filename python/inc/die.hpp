@@ -13,6 +13,8 @@
 #include <string>
 #endif // __cplusplus
 
+#include <stdint.h>
+
 // flags
 #define DIE_DEEPSCAN 0x00000001
 #define DIE_HEURISTICSCAN 0x00000002
