@@ -58,7 +58,7 @@ jobs:
       if: matrix.variant.os == 'macos-latest'
       run: |
         echo NB_CPU=$(sysctl -n hw.ncpu) >> $GITHUB_ENV
-        brew install pyqt6
+        brew install pyqt
         echo CC=clang >> $GITHUB_ENV
         echo CXX=clang++ >> $GITHUB_ENV
 
