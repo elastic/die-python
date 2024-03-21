@@ -1,10 +1,26 @@
 import pathlib
-import platform
+
+# import os
+
+# package_path = pathlib.Path(__path__[0])
+# os.environ["LD_LIBRARY_PATH"] = (
+#     os.environ.get("LD_LIBRARY_PATH", "") + ":" + str(package_path.absolute())
+# )
+
 from typing import Optional
 from . import __package__
 from ._die import __version__
 from ._die import DieFlags as ScanFlags
 from ._die import ScanFileA as _ScanFileA
+from ._die import SetSitePackagePath as _SetSitePackagePath
+from ._die import GetSitePackagePath as _GetSitePackagePath
+
+_SetSitePackagePath(pathlib.Path(__path__[0]))
+
+version_major, version_minor, version_patch = map(int, __version__.split("."))
+database_path = _GetSitePackagePath() / "db"
+"""Path to the DIE signature database"""
+
 
 version_major, version_minor, version_patch = map(int, __version__.split("."))
 

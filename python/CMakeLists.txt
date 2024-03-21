@@ -51,7 +51,7 @@ if(APPLE)
 endif()
 
 if(UNIX)
-    target_link_libraries(_die PRIVATE die)
+    target_link_libraries(_die PRIVATE die dl)
 endif()
 
 install(DIRECTORY die DESTINATION .)

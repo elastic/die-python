@@ -1,7 +1,6 @@
 #ifndef DIELIB_H
 #define DIELIB_H
 
-
 #ifdef _WIN32
 #include <windows.h>
 #else
