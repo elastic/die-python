@@ -17,7 +17,8 @@ FetchContent_Declare(
   DieLibrary
   GIT_REPOSITORY "https://github.com/horsicq/die_library"
   # GIT_TAG c9dc7476dbab0d145f2b76729ff1c96dc02cbf82
-  GIT_TAG master
+  GIT_TAG 79f0e78ad97fd5e968f2213ef316d251eb28efc8
+  # GIT_TAG master
   # URL ${TARGET_URL}
   # URL_HASH SHA1=${TARGET_HASH}
 )

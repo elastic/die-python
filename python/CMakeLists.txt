@@ -55,9 +55,6 @@ if(UNIX)
 endif()
 
 install(DIRECTORY die DESTINATION .)
-install(TARGETS _die LIBRARY DESTINATION die)
-install(DIRECTORY ${DIE_BASE_ROOT}/db DESTINATION die)
-install(FILES
-    ${DIE_BASE_ROOT}/die.h
-    DESTINATION die
-)
+install(TARGETS _die die DESTINATION die/)
+install (DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die/db)
+install (DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die/db)
