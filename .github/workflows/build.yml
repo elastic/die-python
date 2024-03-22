@@ -32,11 +32,6 @@ jobs:
         python-version: ${{ matrix.python-version }}
         architecture: ${{ matrix.variant.py-arch }}
 
-    - name: Install Python pre-requisites
-      run: |
-        python -m pip install -r python/requirements.txt --user --upgrade
-        python -m pip install -r python/tests/requirements.txt --user --upgrade
-
     - name: Environment Setup (Windows)
       if: matrix.variant.os == 'windows-latest'
       run: |
