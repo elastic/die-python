@@ -33,7 +33,7 @@ using GenericHandle = std::unique_ptr<
 #include <stdio.h>
 
 using UniqueHandle = GenericHandle<FILE, ::fclose>;
-using UniqueModule = GenericHandle<int, ::dlclose>;
+using UniqueModule = GenericHandle<void, ::dlclose>;
 #endif // __linux__
 
 #ifdef _WIN32
