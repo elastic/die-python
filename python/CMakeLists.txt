@@ -42,16 +42,16 @@ target_include_directories(
 )
 target_link_directories(_die PRIVATE ${DIE_BASE_ROOT})
 
-if(MSVC)
-    target_link_libraries(_die PRIVATE die.lib)
-endif()
+# if(MSVC)
+#     target_link_libraries(_die PRIVATE die.lib)
+# endif()
 
 if(APPLE)
-    target_link_libraries(_die PRIVATE die "-framework CoreFoundation" -Wl -lm)
+    target_link_libraries(_die PRIVATE dl "-framework CoreFoundation" -Wl -lm)
 endif()
 
 if(UNIX)
-    target_link_libraries(_die PRIVATE die dl)
+    target_link_libraries(_die PRIVATE dl)
 endif()
 
 install(DIRECTORY die DESTINATION .)
