@@ -6,8 +6,8 @@ set(QT5_VERSION_PATCH 2)
 
 FetchContent_Declare(
     Qt5
-    # URL https://download.qt.io/official_releases/qt/5.15/5.15.2/single/qt-everywhere-src-5.15.2.zip
-    URL http://localhost:8000/qt-everywhere-src-5.15.2.zip
+    URL https://download.qt.io/official_releases/qt/5.15/5.15.2/single/qt-everywhere-src-5.15.2.zip
+    # URL http://localhost:8000/qt-everywhere-src-5.15.2.zip
     URL_HASH SHA1=d61cdf87f0b7705c05dc549778e96b2d872e711d
     CONFIGURE_COMMAND "perl init-repository"
 )

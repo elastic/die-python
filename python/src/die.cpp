@@ -143,7 +143,7 @@ Init()
     const UniqueModule hDieMod(::dlopen(DieDll().string().c_str(), RTLD_NOW));
     if ( !hDieMod )
     {
-        printf("[CRITICAL] dlopen() failed, errno=%#x\n", ::errno);
+        printf("[CRITICAL] dlopen() failed, errno=%#x\n", -42);
         return;
     }
 
