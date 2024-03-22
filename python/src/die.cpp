@@ -175,7 +175,7 @@ std::optional<std::string>
 ScanFileA(std::string& pszFileName, DieFlags nFlags, std::string& pszDatabase)
 {
     Check(0);
-    const OriginalScanFileA_Sig OriginalFunction = static_cast<OriginalScanFileA_Sig>(__FunctionPointers[0]);
+    const OriginalScanFileA_Sig OriginalFunction = reinterpret_cast<OriginalScanFileA_Sig>(__FunctionPointers[0]);
     auto res = OriginalFunction(pszFileName.data(), static_cast<int>(nFlags), pszDatabase.data());
     if ( res )
         return std::string(res);
@@ -186,7 +186,7 @@ std::optional<std::wstring>
 ScanFileW(std::wstring& pwszFileName, DieFlags nFlags, std::wstring& pwszDatabase)
 {
     Check(1);
-    const OriginalScanFileW_Sig OriginalFunction = static_cast<OriginalScanFileW_Sig>(__FunctionPointers[1]);
+    const OriginalScanFileW_Sig OriginalFunction = reinterpret_cast<OriginalScanFileW_Sig>(__FunctionPointers[1]);
     auto res = OriginalFunction(pwszFileName.data(), static_cast<int>(nFlags), pwszDatabase.data());
     if ( res )
         return std::wstring(res);
@@ -197,7 +197,7 @@ void
 FreeMemoryA(std::string& pszString)
 {
     Check(2);
-    const OriginalFreeMemoryA_Sig OriginalFunction = static_cast<OriginalFreeMemoryA_Sig>(__FunctionPointers[2]);
+    const OriginalFreeMemoryA_Sig OriginalFunction = reinterpret_cast<OriginalFreeMemoryA_Sig>(__FunctionPointers[2]);
     return OriginalFunction(pszString.data());
 }
 
@@ -205,7 +205,7 @@ void
 FreeMemoryW(std::string& pwszString)
 {
     Check(3);
-    const OriginalFreeMemoryW_Sig OriginalFunction = static_cast<OriginalFreeMemoryW_Sig>(__FunctionPointers[3]);
+    const OriginalFreeMemoryW_Sig OriginalFunction = reinterpret_cast<OriginalFreeMemoryW_Sig>(__FunctionPointers[3]);
     return OriginalFunction(pwszString.data());
 }
 
