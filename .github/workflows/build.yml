@@ -16,8 +16,8 @@ jobs:
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
         variant:
           - {os: ubuntu-latest, arch: x64, generator: Ninja, config: RelWithDebInfo, py-arch: x64}
+          - {os: macos-latest, arch: x64, generator: Ninja, config: Release, py-arch: x64}
           # - {os: windows-latest, arch: x64, generator: Ninja, config: RelWithDebInfo, py-arch: x64}
-          # - {os: macos-latest, arch: x64, generator: Ninja, config: Release, py-arch: x64}
     runs-on: ${{ matrix.variant.os }}
     name: python${{ matrix.python-version }} / ${{ matrix.variant.os }} / ${{ matrix.python-version }} / ${{ matrix.variant.config }}
     env:
@@ -53,7 +53,7 @@ jobs:
       if: matrix.variant.os == 'macos-latest'
       run: |
         echo NB_CPU=$(sysctl -n hw.ncpu) >> $GITHUB_ENV
-        brew install pyqt
+        brew install qt6
         echo CC=clang >> $GITHUB_ENV
         echo CXX=clang++ >> $GITHUB_ENV
 
