@@ -60,7 +60,7 @@ jobs:
       if: startsWith(matrix.variant.os, 'macos-')
       run: |
         echo NB_CPU=$(sysctl -n hw.ncpu) >> $GITHUB_ENV
-        brew install qt6
+        brew install qt6 gettext
         echo CC=clang >> $GITHUB_ENV
         echo CXX=clang++ >> $GITHUB_ENV
 
