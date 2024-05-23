@@ -1,6 +1,6 @@
 import pathlib
 
-from typing import Optional
+from typing import Optional, Union
 from ._die import __version__
 from ._die import DieFlags as ScanFlags
 from ._die import ScanFileA as _ScanFileA
@@ -12,13 +12,13 @@ database_path = pathlib.Path(__path__[0]) / "db"
 
 
 def scan_file(
-    filepath: pathlib.Path | str, flags: ScanFlags, database: str = ""
+    filepath: Union[pathlib.Path, str], flags: ScanFlags, database: str = ""
 ) -> Optional[str]:
     """
     Scan the given file against the signature database
 
     Arguments:
-        filepath: pathlib.Path | str
+        filepath: Union[pathlib.Path, str]
         flags: ScanFlags
         database: str = ""
 
