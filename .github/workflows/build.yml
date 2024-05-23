@@ -61,6 +61,7 @@ jobs:
       run: |
         echo NB_CPU=$(sysctl -n hw.ncpu) >> $GITHUB_ENV
         brew install qt6 gettext
+        brew link gettext --force
         echo CC=clang >> $GITHUB_ENV
         echo CXX=clang++ >> $GITHUB_ENV
 
