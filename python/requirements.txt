@@ -1,4 +1,0 @@
-black
-setuptools
-wheel
-nanobind

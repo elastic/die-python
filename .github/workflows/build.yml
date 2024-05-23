@@ -11,13 +11,13 @@ on:
 jobs:
   bindings:
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
         variant:
-          - {os: windows-latest, arch: x64, generator: Ninja, config: RelWithDebInfo, py-arch: x64}
-          #- {os: ubuntu-latest, arch: x64, generator: Ninja, config: RelWithDebInfo, py-arch: x64}
-          #- {os: macos-latest, arch: x64, generator: Ninja, config: Release, py-arch: x64}
+          - {os: ubuntu-latest, arch: x64, generator: Ninja, config: RelWithDebInfo, py-arch: x64}
+          # - {os: windows-latest, arch: x64, generator: Ninja, config: RelWithDebInfo, py-arch: x64}
+          # - {os: macos-latest, arch: x64, generator: Ninja, config: Release, py-arch: x64}
     runs-on: ${{ matrix.variant.os }}
     name: python${{ matrix.python-version }} / ${{ matrix.variant.os }} / ${{ matrix.python-version }} / ${{ matrix.variant.config }}
     env:
@@ -32,11 +32,6 @@ jobs:
         python-version: ${{ matrix.python-version }}
         architecture: ${{ matrix.variant.py-arch }}
 
-    - name: Install Python pre-requisites
-      run: |
-        python -m pip install -r python/requirements.txt --user --upgrade
-        python -m pip install -r python/tests/requirements.txt --user --upgrade
-
     - name: Environment Setup (Windows)
       if: matrix.variant.os == 'windows-latest'
       run: |
@@ -50,20 +45,21 @@ jobs:
       run: |
         echo "NB_CPU=$(grep -c ^processor /proc/cpuinfo)" >> $GITHUB_ENV
         sudo apt-get -y update
-        sudo apt install -y g++ ninja-build
-        echo CC=gcc >> $GITHUB_ENV
-        echo CXX=g++ >> $GITHUB_ENV
+        sudo apt install -y g++ ninja-build clang qtchooser qt6-base-dev qt6-base-dev-tools qt6-declarative-dev libqt6core6 libqt6network6
+        echo CC=clang >> $GITHUB_ENV
+        echo CXX=clang++ >> $GITHUB_ENV
 
     - name: Environment Setup (MacOS)
       if: matrix.variant.os == 'macos-latest'
       run: |
         echo NB_CPU=$(sysctl -n hw.ncpu) >> $GITHUB_ENV
-        echo CC=gcc >> $GITHUB_ENV
-        echo CXX=g++ >> $GITHUB_ENV
+        brew install pyqt
+        echo CC=clang >> $GITHUB_ENV
+        echo CXX=clang++ >> $GITHUB_ENV
 
     - name: Install
       run: |
-        python -m pip install . -U --user
+        python -m pip install .[tests] -U --user
 
     - name: Test
       run: |

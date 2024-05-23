@@ -1,10 +1,11 @@
-#pragma once
+#include <stdint.h>
 
 #include <optional>
 #include <string>
 
 #include "die.h"
 
+#ifdef __cplusplus
 namespace DIE
 {
 enum class DieFlags : uint32_t
@@ -30,8 +31,18 @@ void
 FreeMemoryA(std::string& pszString);
 
 void
-FreeMemoryW(std::string& pwszString);
+FreeMemoryW(std::wstring& pwszString);
 
+#ifdef _WIN32
 int
-VB_ScanFile(wchar_t* pwszFileName, unsigned int nFlags, wchar_t* pwszDatabase, wchar_t* pwszBuffer, int nBufferSize);
+VB_ScanFile(
+    std::wstring& pwszFileName,
+    DieFlags nFlags,
+    std::wstring& pwszDatabase,
+    std::wstring& pwszBuffer,
+    size_t nBufferSize);
+#endif // _WIN32
+
 } // namespace DIE
+
+#endif

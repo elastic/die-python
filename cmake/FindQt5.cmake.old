@@ -1,14 +1,15 @@
 include( FetchContent )
 
-set(QT5_VERSION_MAJOR 6)
-set(QT5_VERSION_MINOR 6)
+set(QT5_VERSION_MAJOR 5)
+set(QT5_VERSION_MINOR 15)
 set(QT5_VERSION_PATCH 2)
 
 FetchContent_Declare(
-    Qt6
-    # URL https://download.qt.io/official_releases/qt/6.6/6.6.2/single/qt-everywhere-src-6.6.2.zip
-    URL http://localhost:8000/qt-everywhere-src-6.6.2.zip
-    URL_HASH SHA1=e0f6a12c7c93ee9bda2597f63a763131f4727cd2
+    Qt5
+    URL https://download.qt.io/official_releases/qt/5.15/5.15.2/single/qt-everywhere-src-5.15.2.zip
+    # URL http://localhost:8000/qt-everywhere-src-5.15.2.zip
+    URL_HASH SHA1=d61cdf87f0b7705c05dc549778e96b2d872e711d
+    CONFIGURE_COMMAND "perl init-repository"
 )
 
 set(QT_BUILD_SUBMODULES
@@ -66,9 +67,9 @@ set(QT_FEATURE_gui OFF)
 set(QT_FEATURE_testlib OFF)
 set(QT_FEATURE_printsupport OFF)
 
-FetchContent_MakeAvailable( Qt6 )
+FetchContent_MakeAvailable( Qt5 )
 
-message(STATUS "Using Qt6 in '${qt6_SOURCE_DIR}'")
+message(STATUS "Using Qt5 in '${qt5_SOURCE_DIR}'")
 
 set(CMAKE_AUTOUIC OFF)
 set(CMAKE_AUTOMOC OFF)
