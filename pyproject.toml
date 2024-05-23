@@ -9,11 +9,15 @@ description = "Python bindings for Detect It Easy (DIE)."
 readme = "./README.md"
 license.file = "./LICENSE"
 requires-python = ">=3.8"
-authors = [{ name = "hugsy", email = "hugsy@blah.cat" }]
+authors = [{ name = "@calladoum-elastic" }]
 classifiers = [
     "Development Status :: 4 - Beta",
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Natural Language :: English",
 ]
 dependencies = ["pyqt6", "setuptools", "wheel", "nanobind", "ninja"]
@@ -22,7 +26,7 @@ dependencies = ["pyqt6", "setuptools", "wheel", "nanobind", "ninja"]
 tests = ["pytest", "black"]
 
 [project.urls]
-Homepage = "https://github.com/hugsy/die_python"
+Homepage = "https://github.com/calladoum-elastic/die_python"
 
 [tool.isort]
 profile = "black"
@@ -32,4 +36,9 @@ wheel.py-api = "cp312"
 minimum-version = "0.4"
 build-dir = "build/{wheel_tag}"
 cmake.minimum-version = "3.20"
-cmake.args = ["-G Ninja"]
+# cmake.args = ["-G Ninja"]
+
+# Uncomment for debug (+ASAN)
+# cmake.verbose = true
+# logging.level = "DEBUG"
+# cmake.build-type = "Debug"

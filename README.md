@@ -6,16 +6,18 @@
 
 Python3 bindings for [@horsicq](https://github.com/horsicq/)'s [Detect-It-Easy](https://github.com/horsicq/Detect-It-Easy)
 
-Currently works on Windows only
-
 
 ## Install
 
+> [!NOTE]
+> Building from source may be quite long and resource intensive as it requires to build Qt6.
+
 ### From PIP
 
-TODO
+> [!CAUTION]
+> WIP - Not ready yet
 
-```
+```console
 ```
 
 ### From Github
@@ -28,7 +30,7 @@ python -m pip install -e "git+https://github.com/calladoum-elastic/die-python.gi
 
 ```console
 git clone https://github.com/calladoum-elastic/die-python
-python -m pip install die-python
+python -m pip install . --user -U
 ```
 
 ## Usage

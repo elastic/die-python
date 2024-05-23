@@ -11,7 +11,7 @@ find_package(Python 3
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
-    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "RelWithDebInfo"  "Release" )
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
 execute_process(
@@ -26,36 +26,44 @@ set(DIE_PYTHON_ROOT_DIR ${DIE_ROOT_DIR}/python)
 set(DIE_BASE_ROOT ${dielibrary_SOURCE_DIR})
 
 nanobind_add_module(
-    _die NB_STATIC
+    _die
+    NB_STATIC
     ./src/die.cpp
 )
 
-add_dependencies(_die die Qt6::Core)
+add_dependencies(_die die Qt6::Core Qt6::Qml)
 target_compile_definitions(_die PRIVATE)
 
 target_include_directories(
     _die
     PRIVATE
-        ${DIE_BASE_ROOT}
         ${DIE_PYTHON_ROOT_DIR}/inc
-        ${qt6_SOURCE_DIR}
+        ${DIE_BASE_ROOT}/src/include
+        # ${DIE_BASE_ROOT}
+        # ${qt6_SOURCE_DIR}
 )
-target_link_directories(_die PRIVATE ${DIE_BASE_ROOT})
+# target_link_directories(_die PRIVATE ${DIE_BASE_ROOT})
+
 
 # if(MSVC)
 #     target_link_libraries(_die PRIVATE die.lib)
 # endif()
 
-if(APPLE)
-    target_link_libraries(_die PRIVATE dl "-framework CoreFoundation" -Wl -lm)
-endif()
+# if(APPLE)
+#     target_link_libraries(_die PRIVATE dl "-framework CoreFoundation" -Wl -lm libdie.a)
+# endif()
 
-if(UNIX)
-    target_link_libraries(_die PRIVATE dl)
-endif()
+# if(UNIX)
+#     target_link_libraries(_die PRIVATE dl libdie.a)
+# endif()
+
+target_link_libraries(_die PRIVATE $<TARGET_FILE:die> $<TARGET_PROPERTY:die,LINK_LIBRARIES>)
+target_link_libraries(_die PRIVATE Qt6::Core)
+target_link_libraries(_die PRIVATE Qt6::Qml)
+target_link_libraries(_die PRIVATE Qt6::Concurrent)
 
 install(DIRECTORY die DESTINATION .)
 install(TARGETS _die DESTINATION die/)
-install(TARGETS die DESTINATION die/ EXCLUDE_FROM_ALL)
+install(TARGETS die DESTINATION die/)
 install (DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die/db)
 install (DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die/db)
