@@ -17,7 +17,6 @@ def test_basic_import():
     res = die.scan_file(
         default_target,
         die.ScanFlags.Deepscan,
-        dbpath / "db/PE/UPX lock.2.sg",
     )
 
     if platform.system() == "Windows":
