@@ -14,31 +14,31 @@ jobs:
       fail-fast: false
       matrix:
         variant:
-          - {os: macos-13,     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: 3.8 }
-          - {os: macos-13,     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: 3.9 }
-          - {os: macos-13,     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: 3.10 }
-          - {os: macos-13,     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: 3.11 }
-          - {os: macos-13,     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: 3.12 }
-          - {os: macos-14,     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: 3.8 }
-          - {os: macos-14,     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: 3.9 }
-          - {os: macos-14,     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: 3.10 }
-          - {os: macos-14,     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: 3.11 }
-          - {os: macos-14,     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: 3.12 }
-          - {os: ubuntu-20.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.8 }
-          - {os: ubuntu-20.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.9 }
-          - {os: ubuntu-20.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.10 }
-          - {os: ubuntu-20.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.11 }
-          - {os: ubuntu-20.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.12 }
-          - {os: ubuntu-22.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.8 }
-          - {os: ubuntu-22.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.9 }
-          - {os: ubuntu-22.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.10 }
-          - {os: ubuntu-22.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.11 }
-          - {os: ubuntu-22.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.12 }
-          - {os: ubuntu-24.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.8 }
-          - {os: ubuntu-24.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.9 }
-          - {os: ubuntu-24.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.10 }
-          - {os: ubuntu-24.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.11 }
-          - {os: ubuntu-24.04, arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: 3.12 }
+          - {os: 'macos-13',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.8' }
+          - {os: 'macos-13',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.9' }
+          - {os: 'macos-13',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.10' }
+          - {os: 'macos-13',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.11' }
+          - {os: 'macos-13',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.12' }
+          - {os: 'macos-14',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.8' }
+          - {os: 'macos-14',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.9' }
+          - {os: 'macos-14',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.10' }
+          - {os: 'macos-14',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.11' }
+          - {os: 'macos-14',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.12' }
+          - {os: 'ubuntu-20.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.8' }
+          - {os: 'ubuntu-20.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.9' }
+          - {os: 'ubuntu-20.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.10' }
+          - {os: 'ubuntu-20.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.11' }
+          - {os: 'ubuntu-20.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.12' }
+          - {os: 'ubuntu-22.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.8' }
+          - {os: 'ubuntu-22.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.9' }
+          - {os: 'ubuntu-22.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.10' }
+          - {os: 'ubuntu-22.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.11' }
+          - {os: 'ubuntu-22.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.12' }
+          - {os: 'ubuntu-24.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.8' }
+          - {os: 'ubuntu-24.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.9' }
+          - {os: 'ubuntu-24.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.10' }
+          - {os: 'ubuntu-24.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.11' }
+          - {os: 'ubuntu-24.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.12' }
           # - {os: windows-2022, arch: x64, generator: Ninja, config: RelWithDebInfo, py-arch: x64}
     runs-on: ${{ matrix.variant.os }}
     name: python${{ matrix.variant.py-version }} / ${{ matrix.variant.os }} / ${{ matrix.variant.config }}
