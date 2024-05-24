@@ -71,8 +71,6 @@ jobs:
     - name: Environment Setup (MacOS 13)
       if: matrix.variant.os == 'macos-14'
       run: |
-        brew uninstall --force gettext
-        brew install gettext
         brew install libidn2
         brwe link gettext --force
 
