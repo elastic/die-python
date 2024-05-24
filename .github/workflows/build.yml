@@ -68,11 +68,11 @@ jobs:
         echo CC=clang >> $GITHUB_ENV
         echo CXX=clang++ >> $GITHUB_ENV
 
-    - name: Environment Setup (MacOS 13)
+    - name: Environment Setup (MacOS 14)
       if: matrix.variant.os == 'macos-14'
       run: |
         brew install libidn2
-        brwe link gettext --force
+        brew link gettext --force
 
     - name: Setup Python
       uses: actions/setup-python@v5
