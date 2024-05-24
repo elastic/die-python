@@ -14,6 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         variant:
+          # https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
           - {os: 'macos-13',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.8' }
           - {os: 'macos-13',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.9' }
           - {os: 'macos-13',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.10' }
@@ -24,17 +25,11 @@ jobs:
           - {os: 'macos-14',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.10' }
           - {os: 'macos-14',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.11' }
           - {os: 'macos-14',     arch: x64, py-arch: x64, generator: Ninja, config: Release,        py-version: '3.12' }
-          - {os: 'ubuntu-20.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.8' }
-          - {os: 'ubuntu-20.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.9' }
-          - {os: 'ubuntu-20.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.10' }
-          - {os: 'ubuntu-20.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.11' }
-          - {os: 'ubuntu-20.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.12' }
           - {os: 'ubuntu-22.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.8' }
           - {os: 'ubuntu-22.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.9' }
           - {os: 'ubuntu-22.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.10' }
           - {os: 'ubuntu-22.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.11' }
           - {os: 'ubuntu-22.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.12' }
-          - {os: 'ubuntu-24.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.8' }
           - {os: 'ubuntu-24.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.9' }
           - {os: 'ubuntu-24.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.10' }
           - {os: 'ubuntu-24.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.11' }
@@ -75,10 +70,18 @@ jobs:
       if: startsWith(matrix.variant.os, 'macos-')
       run: |
         echo NB_CPU=$(sysctl -n hw.ncpu) >> $GITHUB_ENV
-        brew install qt6 gettext
-        brew link gettext --force
+        brew install qt6
         echo CC=clang >> $GITHUB_ENV
         echo CXX=clang++ >> $GITHUB_ENV
+
+
+    - name: Environment Setup (MacOS 13)
+      if: matrix.variant.os == 'macos-14'
+      run: |
+        brew uninstall --force gettext
+        brew install gettext
+        brew install libidn2
+        brwe link gettext --force
 
     - name: Install
       run: |
