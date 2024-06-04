@@ -25,14 +25,12 @@ find_package(DieLibrary REQUIRED)
 set(DIE_PYTHON_ROOT_DIR ${DIE_ROOT_DIR}/python)
 set(DIE_BASE_ROOT ${dielibrary_SOURCE_DIR})
 
-nanobind_add_module(
-    _die
+nanobind_add_module(_die
     NB_STATIC
-    ./src/die.cpp
+        ./src/die.cpp
 )
 
-add_dependencies(_die die Qt6::Core Qt6::Qml)
-target_compile_definitions(_die PRIVATE)
+add_dependencies(_die die)
 
 target_include_directories(
     _die
@@ -44,10 +42,10 @@ target_include_directories(
 )
 # target_link_directories(_die PRIVATE ${DIE_BASE_ROOT})
 
-
-# if(MSVC)
-#     target_link_libraries(_die PRIVATE die.lib)
-# endif()
+if(MSVC)
+    # Disable MSVC `min` & `max` macros for `die` (breaks Qt)
+    target_compile_definitions(die PUBLIC NOMINMAX)
+endif()
 
 # if(APPLE)
 #     target_link_libraries(_die PRIVATE dl "-framework CoreFoundation" -Wl -lm libdie.a)
@@ -65,5 +63,5 @@ target_link_libraries(_die PRIVATE Qt6::Concurrent)
 install(DIRECTORY die DESTINATION .)
 install(TARGETS _die DESTINATION die/)
 install(TARGETS die DESTINATION die/)
-install (DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die/db)
-install (DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die/db)
+install(DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die/db)
+install(DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die/db)
