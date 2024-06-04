@@ -1,6 +1,7 @@
 import pathlib
 
 from typing import Optional, Union
+import PyQt6  # pylint: disable= unused-import
 from ._die import __version__
 from ._die import DieFlags as ScanFlags
 from ._die import ScanFileA as _ScanFileA

@@ -1,6 +1,25 @@
-include( FetchContent )
+include(FetchContent)
+
+set(ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/..")
 
 # Only use Qt6
+
+set(QT_BUILD_VERSION "6.7.1")
+
+if(WIN32)
+  #
+  # Use aqtinstall to install Qt pre-compiled binaries only, ex:
+  #
+  # python -m aqt  install-qt windows desktop 6.7.1 win64_llvm_mingw
+  # or
+  # python -m aqt  install-qt windows desktop 6.7.1 win64_msvc2019_64
+  #
+  set(QT_BUILD_COMPILER "msvc2019_64")
+  set(Qt6_DIR "${ROOT_DIR}/build/${QT_BUILD_VERSION}/${QT_BUILD_COMPILER}/lib/cmake/Qt6")
+  set(QT_DIR ${Qt6_DIR})
+  list(APPEND CMAKE_MODULE_PATH ${Qt6_DIR})
+endif(WIN32)
+
 find_package(Qt6 REQUIRED COMPONENTS Core Qml Concurrent)
 
 FetchContent_Declare(

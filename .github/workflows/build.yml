@@ -35,22 +35,31 @@ jobs:
           - {os: 'ubuntu-24.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.10' }
           - {os: 'ubuntu-24.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.11' }
           - {os: 'ubuntu-24.04', arch: x64, py-arch: x64, generator: Ninja, config: RelWithDebInfo, py-version: '3.12' }
-          # - {os: windows-2022, arch: x64, generator: Ninja, config: RelWithDebInfo, py-arch: x64}
+          - {os: windows-2022,   arch: x64, py-arch: x64, generator: msvc,  config: RelWithDebInfo, py-version: '3.9' }
     runs-on: ${{ matrix.variant.os }}
     name: python${{ matrix.variant.py-version }} / ${{ matrix.variant.os }} / ${{ matrix.variant.config }}
     env:
       CMAKE_FLAGS: ""
+      QT_VERSION: 6.7.1
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.variant.py-version }}
+        architecture: ${{ matrix.variant.py-arch }}
 
     - name: Environment Setup (Windows)
       if: startsWith(matrix.variant.os, 'windows-')
       run: |
         echo NB_CPU=$env:NUMBER_OF_PROCESSORS | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
         echo CMAKE_ARCH='-A ${{ matrix.variant.arch }}' | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-        # Import-Module .\.github\Invoke-VisualStudio.ps1
-        # Invoke-VisualStudio2022${{ matrix.variant.arch }}
+        Import-Module .\.github\Invoke-VisualStudio.ps1
+        Invoke-VisualStudio2019${{ matrix.variant.arch }}
+        python -m pip install aqtinstall --user --upgrade
+        python -m aqt install-qt -O build windows desktop ${{ env.QT_VERSION }} win64_msvc2019_64
 
     - name: Environment Setup (Linux)
       if: startsWith(matrix.variant.os, 'ubuntu-')
@@ -74,12 +83,6 @@ jobs:
       run: |
         brew install libidn2
         brew link gettext --force
-
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.variant.py-version }}
-        architecture: ${{ matrix.variant.py-arch }}
 
     - name: Install
       run: |
