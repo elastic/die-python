@@ -4,13 +4,10 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Licence MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?maxAge=2592000?style=plastic)](https://github.com/hugsy/die-python/blob/main/LICENSE)
 
-Python3 bindings for [@horsicq](https://github.com/horsicq/)'s [Detect-It-Easy](https://github.com/horsicq/Detect-It-Easy)
+Native Python 3 (3.8 -> 3.12) bindings for [@horsicq](https://github.com/horsicq/)'s [Detect-It-Easy](https://github.com/horsicq/Detect-It-Easy)
 
 
 ## Install
-
-> [!NOTE]
-> Building from source may be quite long and resource intensive as it requires to build Qt6.
 
 ### From PIP
 
@@ -43,5 +40,6 @@ result = die.scan_file(
         die.ScanFlags.Deepscan,
         die.database_path / "PE/UPX lock.2.sg"
 )
-assert result is not None
+print(result)
+'PE64'
 ```
