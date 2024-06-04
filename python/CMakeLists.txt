@@ -42,10 +42,10 @@ target_include_directories(
 )
 # target_link_directories(_die PRIVATE ${DIE_BASE_ROOT})
 
-
-# if(MSVC)
-#     target_link_libraries(_die PRIVATE $<TARGET_FILE:die>)
-# endif()
+if(MSVC)
+    # Disable MSVC `min` & `max` macros for `die` (breaks Qt)
+    target_compile_definitions(die PUBLIC NOMINMAX)
+endif()
 
 # if(APPLE)
 #     target_link_libraries(_die PRIVATE dl "-framework CoreFoundation" -Wl -lm libdie.a)
