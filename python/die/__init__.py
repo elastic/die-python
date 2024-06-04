@@ -69,12 +69,10 @@ def databases() -> Generator[pathlib.Path, None, None]:
     """
 
     def __enum_db(root: pathlib.Path) -> Generator[pathlib.Path, None, None]:
-        for curpath, dirnames, fnames in root.walk():
-            for fname in fnames:
-                fpath = curpath / fname
-                if fpath.is_file():
-                    yield fpath
-            for dirname in dirnames:
-                yield from __enum_db(curpath / dirname)
+        for child in root.iterdir():
+            if child.is_file():
+                yield child
+            if child.is_dir():
+                yield from __enum_db(child)
 
     return __enum_db(database_path)
