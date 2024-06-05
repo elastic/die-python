@@ -4,13 +4,10 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Licence MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?maxAge=2592000?style=plastic)](https://github.com/hugsy/die-python/blob/main/LICENSE)
 
-Python3 bindings for [@horsicq](https://github.com/horsicq/)'s [Detect-It-Easy](https://github.com/horsicq/Detect-It-Easy)
+Native Python 3 (3.8 -> 3.12) bindings for [@horsicq](https://github.com/horsicq/)'s [Detect-It-Easy](https://github.com/horsicq/Detect-It-Easy)
 
 
 ## Install
-
-> [!NOTE]
-> Building from source may be quite long and resource intensive as it requires to build Qt6.
 
 ### From PIP
 
@@ -33,15 +30,58 @@ git clone https://github.com/calladoum-elastic/die-python
 python -m pip install . --user -U
 ```
 
-## Usage
+## Quick start
 
 ```python
 import die, pathlib
 
-result = die.scan_file(
-        pathlib.Path("c:/windows/system32/ntdll.dll"),
-        die.ScanFlags.Deepscan,
-        die.database_path / "PE/UPX lock.2.sg"
-)
-assert result is not None
+print(die.scan_file("c:/windows/system32/ntdll.dll", die.ScanFlags.Deepscan))
+'PE64'
+
+print(die.scan_file("../upx.exe", die.ScanFlags.RESULT_AS_JSON, str(die.database_path/'db') ))
+{
+    "detects": [
+        {
+            "filetype": "PE64",
+            "parentfilepart": "Header",
+            "values": [
+                {
+                    "info": "Console64,console",
+                    "name": "GNU linker ld (GNU Binutils)",
+                    "string": "Linker: GNU linker ld (GNU Binutils)(2.28)[Console64,console]",
+                    "type": "Linker",
+                    "version": "2.28"
+                },
+                {
+                    "info": "",
+                    "name": "MinGW",
+                    "string": "Compiler: MinGW",
+                    "type": "Compiler",
+                    "version": ""
+                },
+                {
+                    "info": "NRV,brute",
+                    "name": "UPX",
+                    "string": "Packer: UPX(4.24)[NRV,brute]",
+                    "type": "Packer",
+                    "version": "4.24"
+                }
+            ]
+        }
+    ]
+}
+
+for db in die.databases():
+    print(db)
+C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\ACE
+C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\APK\PackageName.1.sg
+C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\APK\SingleJar.3.sg
+C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\APK\_APK.0.sg
+C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\APK\_init
+C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\Archive\_init
+C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\archive-file
+C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\arj
+C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\Binary\Amiga loadable.1.sg
+C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\Binary\archive.7z.1.sg
+[...]
 ```

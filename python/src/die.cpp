@@ -18,44 +18,38 @@ using namespace nb::literals;
 namespace DIE
 {
 std::optional<std::string>
-ScanFileA(std::string& pszFileName, DieFlags nFlags, std::string& pszDatabase)
+ScanFileA(std::string& pszFileName, uint32_t nFlags, std::string& pszDatabase)
 {
     auto res = ::DIE_ScanFileA(pszFileName.data(), static_cast<int>(nFlags), pszDatabase.data());
-    if ( res != nullptr )
+    if ( res == nullptr )
     {
-        return std::string(res);
+        return std::nullopt;
     }
-    return std::nullopt;
+
+    auto const res_str = std::string(res);
+    ::DIE_FreeMemoryA(res);
+    return res_str;
 }
 
 std::optional<std::wstring>
-ScanFileW(std::wstring& pwszFileName, DieFlags nFlags, std::wstring& pwszDatabase)
+ScanFileW(std::wstring& pwszFileName, uint32_t nFlags, std::wstring& pwszDatabase)
 {
     auto res = ::DIE_ScanFileW(pwszFileName.data(), static_cast<int>(nFlags), pwszDatabase.data());
-    if ( res != nullptr )
+    if ( res == nullptr )
     {
-        return std::wstring(res);
+        return std::nullopt;
     }
-    return std::nullopt;
+
+    ::DIE_FreeMemoryW(res);
+    return std::wstring(res);
 }
 
-void
-FreeMemoryA(std::string& pszString)
-{
-    return ::DIE_FreeMemoryA(pszString.data());
-}
-
-void
-FreeMemoryW(std::wstring& pwszString)
-{
-    return ::DIE_FreeMemoryW(pwszString.data());
-}
 
 #ifdef _WIN32
 int
 VB_ScanFile(
     std::wstring& pwszFileName,
-    DieFlags nFlags,
+    uint32_t nFlags,
     std::wstring& pwszDatabase,
     std::wstring& pwszBuffer,
     uint32_t nBufferSize)
@@ -89,8 +83,6 @@ NB_MODULE(_die, m)
     m.doc()               = "The native `die` module";
     m.attr("__version__") = "0.1.0";
 
-    m.def("ScanFileA", DIE::ScanFileA);
-    m.def("ScanFileW", DIE::ScanFileW);
-    m.def("FreeMemoryA", DIE::FreeMemoryA);
-    m.def("FreeMemoryW", DIE::FreeMemoryW);
+    m.def("ScanFileA", DIE::ScanFileA, "pszFileName"_a, "nFlags"_a, "pszDatabase"_a, "Scan a file (ascii string)");
+    m.def("ScanFileW", DIE::ScanFileW, "pwszFileName"_a, "nFlags"_a, "pszDatabase"_a, "Scan a file (unicode string)");
 }

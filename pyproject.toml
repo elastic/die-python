@@ -23,7 +23,7 @@ classifiers = [
 dependencies = ["pyqt6", "setuptools", "wheel", "nanobind"]
 
 [project.optional-dependencies]
-tests = ["pytest", "black"]
+tests = ["pytest", "black", "beautifulsoup4", "lxml"]
 
 [project.urls]
 Homepage = "https://github.com/calladoum-elastic/die_python"

@@ -22,22 +22,17 @@ enum class DieFlags : uint32_t
 };
 
 std::optional<std::string>
-ScanFileA(std::string& pszFileName, DieFlags nFlags, std::string& pszDatabase);
+ScanFileA(std::string& pszFileName, uint32_t nFlags, std::string& pszDatabase);
 
 std::optional<std::wstring>
-ScanFileW(std::wstring& pwszFileName, DieFlags nFlags, std::wstring& pwszDatabase);
+ScanFileW(std::wstring& pwszFileName, uint32_t nFlags, std::wstring& pwszDatabase);
 
-void
-FreeMemoryA(std::string& pszString);
-
-void
-FreeMemoryW(std::wstring& pwszString);
 
 #ifdef _WIN32
 int
 VB_ScanFile(
     std::wstring& pwszFileName,
-    DieFlags nFlags,
+    uint32_t nFlags,
     std::wstring& pwszDatabase,
     std::wstring& pwszBuffer,
     size_t nBufferSize);
