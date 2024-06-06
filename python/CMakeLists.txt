@@ -37,31 +37,48 @@ target_include_directories(
     PRIVATE
         ${DIE_PYTHON_ROOT_DIR}/inc
         ${DIE_BASE_ROOT}/src/include
-        # ${DIE_BASE_ROOT}
-        # ${qt6_SOURCE_DIR}
 )
-# target_link_directories(_die PRIVATE ${DIE_BASE_ROOT})
 
 if(MSVC)
     # Disable MSVC `min` & `max` macros for `die` (breaks Qt)
     target_compile_definitions(die PUBLIC NOMINMAX)
 endif()
 
-# if(APPLE)
-#     target_link_libraries(_die PRIVATE dl "-framework CoreFoundation" -Wl -lm libdie.a)
-# endif()
+if(APPLE)
+    target_link_libraries(_die PRIVATE dl "-framework CoreFoundation" -Wl -lm libdie.a)
+endif()
 
-# if(UNIX)
-#     target_link_libraries(_die PRIVATE dl libdie.a)
-# endif()
+if(LINUX)
+    # On Linux, let linker lint elf loader to search for curdir/lib
+    target_link_options(_die PRIVATE -Wl,-rpath,$ORIGIN/lib)
+endif()
 
 target_link_libraries(_die PRIVATE $<TARGET_FILE:die> $<TARGET_PROPERTY:die,LINK_LIBRARIES>)
 target_link_libraries(_die PRIVATE Qt6::Core)
 target_link_libraries(_die PRIVATE Qt6::Qml)
 target_link_libraries(_die PRIVATE Qt6::Concurrent)
+target_link_libraries(_die PRIVATE Qt6::Network)
 
 install(DIRECTORY die DESTINATION .)
 install(TARGETS _die DESTINATION die/)
 install(TARGETS die DESTINATION die/)
 install(DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die/db)
 install(DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die/db)
+
+install(
+    DIRECTORY
+        ${Qt6_DIR}/../../
+    DESTINATION
+        die/lib
+    FILES_MATCHING
+        PATTERN "libQt6Core.*"
+        PATTERN "libQt6Qml.*"
+        PATTERN "libQt6Concurrent.*"
+        PATTERN "libQt6Network.*"
+        PATTERN "libicui18n.*"
+        PATTERN "libicuuc.*"
+        PATTERN "libicudata.*"
+        PATTERN "cmake" EXCLUDE
+        PATTERN "objects-*" EXCLUDE
+        PATTERN "pkgconfig" EXCLUDE
+)
