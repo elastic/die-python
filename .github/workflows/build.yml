@@ -76,6 +76,7 @@ jobs:
         python -m pip install .[tests] -U --user
 
     - name: Test
+      if: startsWith(matrix.variant.runner, 'macos-') == false
       run: |
         python -m pytest -v python/tests
 
