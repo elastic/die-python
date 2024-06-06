@@ -68,7 +68,6 @@ jobs:
       run: |
         echo CC=clang >> $GITHUB_ENV
         echo CXX=clang++ >> $GITHUB_ENV
-        brew install qt6
         python -m pip install aqtinstall --user --upgrade
         python -m aqt install-qt -O build mac desktop ${{ env.QT_VERSION }} ${{ matrix.variant.qt-compiler }}
 

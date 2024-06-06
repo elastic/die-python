@@ -26,7 +26,6 @@ set(DIE_PYTHON_ROOT_DIR ${DIE_ROOT_DIR}/python)
 set(DIE_BASE_ROOT ${dielibrary_SOURCE_DIR})
 
 nanobind_add_module(_die
-    NB_STATIC
         ./src/die.cpp
 )
 
@@ -46,10 +45,10 @@ endif()
 
 if(APPLE)
     target_link_libraries(_die PRIVATE dl "-framework CoreFoundation")
+    target_link_options(_die PRIVATE -Wl,-rpath,$ORIGIN/lib)
 endif()
 
 if(LINUX)
-    # On Linux, let linker lint elf loader to search for curdir/lib
     target_link_options(_die PRIVATE -Wl,-rpath,$ORIGIN/lib)
 endif()
 
@@ -65,20 +64,34 @@ install(TARGETS die DESTINATION die/)
 install(DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die/db)
 install(DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die/db)
 
-install(
-    DIRECTORY
-        ${Qt6_DIR}/../../
-    DESTINATION
-        die/lib
-    FILES_MATCHING
-        PATTERN "libQt6Core.*"
-        PATTERN "libQt6Qml.*"
-        PATTERN "libQt6Concurrent.*"
-        PATTERN "libQt6Network.*"
-        PATTERN "libicui18n.*"
-        PATTERN "libicuuc.*"
-        PATTERN "libicudata.*"
-        PATTERN "cmake" EXCLUDE
-        PATTERN "objects-*" EXCLUDE
-        PATTERN "pkgconfig" EXCLUDE
-)
+if(LINUX OR APPLE)
+    install(
+        DIRECTORY
+            ${Qt6_DIR}/../../
+        DESTINATION
+            die/lib
+        FILES_MATCHING
+            PATTERN "libQt6Core.*"
+            PATTERN "libQt6Qml.*"
+            PATTERN "libQt6Concurrent.*"
+            PATTERN "libQt6Network.*"
+            PATTERN "libicui18n.*"
+            PATTERN "libicuuc.*"
+            PATTERN "libicudata.*"
+            PATTERN "cmake" EXCLUDE
+            PATTERN "objects-*" EXCLUDE
+            PATTERN "pkgconfig" EXCLUDE
+    )
+else()
+    install(
+        DIRECTORY
+            ${Qt6_DIR}/../../../bin/
+        DESTINATION
+            die/
+        FILES_MATCHING
+            PATTERN "Qt6Core.*"
+            PATTERN "Qt6Qml.*"
+            PATTERN "Qt6Concurrent.*"
+            PATTERN "Qt6Network.*"
+    )
+endif()

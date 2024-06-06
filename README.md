@@ -31,9 +31,9 @@ If not install them using `aqt`
 
 ```console
 python -m pip install aqtinstall --user -U
-python -m aqt install-qt -O ./build linux desktop 6.6.2 gcc_64 # linux only
-python -m aqt install-qt -O ./build windows desktop 6.6.2 win64_msvc2019_64 # windows only
-python -m aqt install-qt -O ./build mac desktop 6.6.2 clang_64 # mac only
+python -m aqt install-qt -O ./build linux    desktop 6.6.2 gcc_64             # linux only
+python -m aqt install-qt -O ./build windows  desktop 6.6.2 win64_msvc2019_64  # windows only
+python -m aqt install-qt -O ./build mac      desktop 6.6.2 clang_64           # mac only
 ```
 
 Then you can install the package
