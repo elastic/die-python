@@ -45,7 +45,7 @@ if(MSVC)
 endif()
 
 if(APPLE)
-    target_link_libraries(_die PRIVATE dl "-framework CoreFoundation" -Wl -lm libdie.a)
+    target_link_libraries(_die PRIVATE dl "-framework CoreFoundation")
 endif()
 
 if(LINUX)
