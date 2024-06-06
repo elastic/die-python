@@ -17,18 +17,31 @@ Native Python 3 (3.8 -> 3.12) bindings for [@horsicq](https://github.com/horsicq
 ```console
 ```
 
-### From Github
 
-```console
-python -m pip install -e "git+https://github.com/calladoum-elastic/die-python.git/#egg=die-python"
-```
 
 ### Using Git
 
 ```console
 git clone https://github.com/calladoum-elastic/die-python
+cd die-python
+```
+
+Make sure qt 6.6.2 redist can be found in the build folder
+If not install them using `aqt`
+
+```console
+python -m pip install aqtinstall --user -U
+python -m aqt install-qt -O ./build linux desktop 6.6.2 gcc_64 # linux only
+python -m aqt install-qt -O ./build windows desktop 6.6.2 win64_msvc2019_64 # windows only
+python -m aqt install-qt -O ./build mac desktop 6.6.2 clang_64 # mac only
+```
+
+Then you can install the package
+
+```console
 python -m pip install . --user -U
 ```
+
 
 ## Quick start
 
