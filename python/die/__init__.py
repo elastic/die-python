@@ -2,7 +2,7 @@ import enum
 import pathlib
 
 from typing import Generator, Optional, Union
-import PyQt6  # pylint: disable= unused-import
+
 from ._die import __version__  # type: ignore
 from ._die import DieFlags as _DieFlags  # type: ignore
 from ._die import ScanFileA as _ScanFileA  # type: ignore
