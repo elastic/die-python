@@ -4,7 +4,7 @@ set(ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/..")
 
 # Only use Qt6
 
-set(QT_BUILD_VERSION "6.6.2")
+set(QT_BUILD_VERSION "6.7.1")
 
 if(WIN32)
   # python -m aqt  install-qt windows desktop ${QT_BUILD_VERSION} win64_msvc2019_64

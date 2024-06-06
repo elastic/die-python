@@ -15,26 +15,26 @@ jobs:
       matrix:
         variant:
           # https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
-          - {os: mac,    runner: macos-13,       arch: x64, py-arch: x64, qt-compiler: clang_64,     config: Release,        py-version: '3.8' }
-          - {os: mac,    runner: macos-13,       arch: x64, py-arch: x64, qt-compiler: clang_64,     config: Release,        py-version: '3.9' }
-          - {os: mac,    runner: macos-13,       arch: x64, py-arch: x64, qt-compiler: clang_64,     config: Release,        py-version: '3.10' }
-          - {os: mac,    runner: macos-13,       arch: x64, py-arch: x64, qt-compiler: clang_64,     config: Release,        py-version: '3.11' }
-          - {os: mac,    runner: macos-13,       arch: x64, py-arch: x64, qt-compiler: clang_64,     config: Release,        py-version: '3.12' }
-          - {os: linux,    runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.8' }
-          - {os: linux,    runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.9' }
-          - {os: linux,    runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.10' }
-          - {os: linux,    runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.11' }
-          - {os: linux,    runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.12' }
-          - {os: windows , runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: msvc2019_64,  config: RelWithDebInfo, py-version: '3.8' }
-          - {os: windows , runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: msvc2019_64,  config: RelWithDebInfo, py-version: '3.9' }
-          - {os: windows , runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: msvc2019_64,  config: RelWithDebInfo, py-version: '3.10' }
-          - {os: windows , runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: msvc2019_64,  config: RelWithDebInfo, py-version: '3.11' }
-          - {os: windows , runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: msvc2019_64,  config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: macos-13,       arch: x64, py-arch: x64, qt-compiler: clang_64,     config: Release,        py-version: '3.8' }
+          - {runner: macos-13,       arch: x64, py-arch: x64, qt-compiler: clang_64,     config: Release,        py-version: '3.9' }
+          - {runner: macos-13,       arch: x64, py-arch: x64, qt-compiler: clang_64,     config: Release,        py-version: '3.10' }
+          - {runner: macos-13,       arch: x64, py-arch: x64, qt-compiler: clang_64,     config: Release,        py-version: '3.11' }
+          - {runner: macos-13,       arch: x64, py-arch: x64, qt-compiler: clang_64,     config: Release,        py-version: '3.12' }
+          - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.8' }
+          - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.9' }
+          - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.10' }
+          - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.11' }
+          - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: msvc2019_64,  config: RelWithDebInfo, py-version: '3.8' }
+          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: msvc2019_64,  config: RelWithDebInfo, py-version: '3.9' }
+          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: msvc2019_64,  config: RelWithDebInfo, py-version: '3.10' }
+          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: msvc2019_64,  config: RelWithDebInfo, py-version: '3.11' }
+          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: msvc2019_64,  config: RelWithDebInfo, py-version: '3.12' }
     runs-on: ${{ matrix.variant.runner }}
     name: python${{ matrix.variant.py-version }} / ${{ matrix.variant.runner }} / ${{ matrix.variant.config }}
     env:
       CMAKE_FLAGS: ""
-      QT_VERSION: 6.6.2
+      QT_VERSION: 6.7.1
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -50,6 +50,8 @@ jobs:
       run: |
         Import-Module .\.github\Invoke-VisualStudio.ps1
         Invoke-VisualStudio2019${{ matrix.variant.arch }}
+        python -m pip install aqtinstall --user --upgrade
+        python -m aqt install-qt -O build windows desktop ${{ env.QT_VERSION }} ${{ matrix.variant.qt-compiler }}
 
     - name: Environment Setup (Linux)
       if: startsWith(matrix.variant.runner, 'ubuntu-')
@@ -58,17 +60,16 @@ jobs:
         sudo apt install -y g++ ninja-build clang
         echo CC=clang >> $GITHUB_ENV
         echo CXX=clang++ >> $GITHUB_ENV
+        python -m pip install aqtinstall --user --upgrade
+        python -m aqt install-qt -O build linux desktop ${{ env.QT_VERSION }} ${{ matrix.variant.qt-compiler }}
 
     - name: Environment Setup (MacOS)
       if: startsWith(matrix.variant.runner, 'macos-')
       run: |
         echo CC=clang >> $GITHUB_ENV
         echo CXX=clang++ >> $GITHUB_ENV
-
-    - name: Python pre-requisites
-      run: |
         python -m pip install aqtinstall --user --upgrade
-        python -m aqt install-qt -O build ${{ matrix.variant.os }} desktop ${{ env.QT_VERSION }} ${{ matrix.variant.qt-compiler }}
+        python -m aqt install-qt -O build mac desktop ${{ env.QT_VERSION }} ${{ matrix.variant.qt-compiler }}
 
     - name: Python installation
       run: |
