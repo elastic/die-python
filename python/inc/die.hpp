@@ -5,6 +5,14 @@
 
 #include "die.h"
 
+#ifndef DIELIB_VERSION
+#define DIELIB_VERSION ""
+#endif // DIELIB_VERSION
+
+#ifndef DIE_VERSION
+#define DIE_VERSION ""
+#endif // DIE_VERSION
+
 #ifdef __cplusplus
 namespace DIE
 {
@@ -26,7 +34,6 @@ ScanFileA(std::string& pszFileName, uint32_t nFlags, std::string& pszDatabase);
 
 std::optional<std::wstring>
 ScanFileW(std::wstring& pwszFileName, uint32_t nFlags, std::wstring& pwszDatabase);
-
 
 #ifdef _WIN32
 int
