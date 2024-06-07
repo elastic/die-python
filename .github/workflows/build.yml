@@ -49,9 +49,10 @@ jobs:
       if: startsWith(matrix.variant.runner, 'windows-')
       run: |
         Import-Module .\.github\Invoke-VisualStudio.ps1
-        Invoke-VisualStudio2019${{ matrix.variant.arch }}
         python -m pip install aqtinstall --user --upgrade
         python -m aqt install-qt -O build windows desktop ${{ env.QT_VERSION }} ${{ matrix.variant.qt-compiler }}
+        Invoke-VisualStudio2019${{ matrix.variant.arch }}
+        echo 'cmake.args = ["-G", "Visual Studio 16 2019"]' >> pyproject.toml
 
     - name: Environment Setup (Linux)
       if: startsWith(matrix.variant.runner, 'ubuntu-')
