@@ -20,7 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Natural Language :: English",
 ]
-dependencies = ["pyqt6", "setuptools", "wheel", "nanobind"]
+dependencies = ["setuptools", "wheel", "nanobind"]
 
 [project.optional-dependencies]
 tests = ["pytest", "black", "beautifulsoup4", "lxml"]
