@@ -126,7 +126,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - name: Download artifact for ${{ matrix.variant.os }}/${{ matrix.variant.py-version }}/${{ matrix.variant.config }}
+      - name: Download artifact for ${{ matrix.variant.runner }}/${{ matrix.variant.py-version }}/${{ matrix.variant.config }}
         uses: actions/download-artifact@v4
         id: download_wheels
         with:
