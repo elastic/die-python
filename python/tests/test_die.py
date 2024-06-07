@@ -13,6 +13,11 @@ def test_constants():
     assert isinstance(die.version_minor, int)
     assert isinstance(die.version_patch, int)
 
+    assert isinstance(die.die_version, str)
+    assert die.die_version
+    assert isinstance(die.dielib_version, str)
+    assert die.dielib_version
+
     # validate die database
     assert isinstance(die.database_path, pathlib.Path)
     assert die.database_path.exists()

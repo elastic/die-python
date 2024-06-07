@@ -80,8 +80,10 @@ NB_MODULE(_die, m)
         .value("ResultAsCsv", DIE::DieFlags::ResultAsCsv)
         .export_values();
 
-    m.doc()               = "The native `die` module";
-    m.attr("__version__") = "0.1.0";
+    m.doc()                  = "The native `die` module";
+    m.attr("__version__")    = "0.1.0";
+    m.attr("die_version")    = DIE_VERSION;
+    m.attr("dielib_version") = DIELIB_VERSION;
 
     m.def("ScanFileA", DIE::ScanFileA, "pszFileName"_a, "nFlags"_a, "pszDatabase"_a, "Scan a file (ascii string)");
     m.def("ScanFileW", DIE::ScanFileW, "pwszFileName"_a, "nFlags"_a, "pszDatabase"_a, "Scan a file (unicode string)");

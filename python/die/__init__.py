@@ -6,6 +6,7 @@ from typing import Generator, Optional, Union
 from ._die import __version__  # type: ignore
 from ._die import DieFlags as _DieFlags  # type: ignore
 from ._die import ScanFileA as _ScanFileA  # type: ignore
+from ._die import die_version, dielib_version  # type: ignore
 
 version_major, version_minor, version_patch = map(int, __version__.split("."))
 

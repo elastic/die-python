@@ -23,7 +23,11 @@ find_package(nanobind CONFIG REQUIRED)
 find_package(DieLibrary REQUIRED)
 
 set(DIE_PYTHON_ROOT_DIR ${DIE_ROOT_DIR}/python)
-set(DIE_BASE_ROOT ${dielibrary_SOURCE_DIR})
+set(DIELIB_BASE_ROOT ${dielibrary_SOURCE_DIR})
+set(DIE_BASE_ROOT "${dielibrary_SOURCE_DIR}/dep/Detect-It-Easy")
+
+file(STRINGS ${DIELIB_BASE_ROOT}/release_version.txt DIELIB_VERSION)
+file(STRINGS ${DIE_BASE_ROOT}/die_version.txt DIE_VERSION)
 
 nanobind_add_module(_die
         ./src/die.cpp
@@ -35,7 +39,7 @@ target_include_directories(
     _die
     PRIVATE
         ${DIE_PYTHON_ROOT_DIR}/inc
-        ${DIE_BASE_ROOT}/src/include
+        ${DIELIB_BASE_ROOT}/src/include
 )
 
 if(MSVC)
@@ -52,6 +56,12 @@ if(LINUX)
     target_link_options(_die PRIVATE -Wl,-rpath,$ORIGIN/lib)
 endif()
 
+target_compile_definitions(_die
+    PRIVATE
+        DIE_VERSION="${DIE_VERSION}"
+        DIELIB_VERSION="${DIELIB_VERSION}"
+)
+
 target_link_libraries(_die PRIVATE $<TARGET_FILE:die> $<TARGET_PROPERTY:die,LINK_LIBRARIES>)
 target_link_libraries(_die PRIVATE Qt6::Core)
 target_link_libraries(_die PRIVATE Qt6::Qml)
@@ -61,8 +71,8 @@ target_link_libraries(_die PRIVATE Qt6::Network)
 install(DIRECTORY die DESTINATION .)
 install(TARGETS _die DESTINATION die/)
 install(TARGETS die DESTINATION die/)
-install(DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die/db)
-install(DIRECTORY ${DIE_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die/db)
+install(DIRECTORY ${DIELIB_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die/db)
+install(DIRECTORY ${DIELIB_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die/db)
 
 if(LINUX OR APPLE)
     install(
