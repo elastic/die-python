@@ -4,7 +4,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Licence MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?maxAge=2592000?style=plastic)](https://github.com/hugsy/die-python/blob/main/LICENSE)
 
-Native Python 3 (3.8 -> 3.12) bindings for [@horsicq](https://github.com/horsicq/)'s [Detect-It-Easy](https://github.com/horsicq/Detect-It-Easy)
+Native Python 3.8+ bindings for [@horsicq](https://github.com/horsicq/)'s [Detect-It-Easy](https://github.com/horsicq/Detect-It-Easy)
 
 
 ## Install
@@ -26,8 +26,7 @@ git clone https://github.com/calladoum-elastic/die-python
 cd die-python
 ```
 
-Make sure qt 6.6.2 redist can be found in the build folder
-If not install them using `aqt`
+Install Qt into the `build`. It can be easily installed using [`aqt`](https://github.com/miurahr/aqtinstall) as follow (here with Qt version 6.6.2):
 
 ```console
 python -m pip install aqtinstall --user -U
@@ -98,3 +97,11 @@ C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\Binary\Am
 C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\Binary\archive.7z.1.sg
 [...]
 ```
+
+## Licenses
+
+Released under Apache 2.0 License and integrates the following repositories:
+
+ - [Detect-It-Easy](https://github.com/horsicq/Detect-It-Easy): MIT license
+ - [die_library](https://github.com/horsicq/die_library): MIT license
+ - [qt](https://github.com/qt/qt): LGPL license
