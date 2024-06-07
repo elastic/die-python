@@ -25,11 +25,11 @@ jobs:
           - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.10' }
           - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.11' }
           - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,       config: RelWithDebInfo, py-version: '3.12' }
-          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.8' }
-          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.9' }
-          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.10' }
-          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.11' }
-          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.8' }
+          - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.9' }
+          - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.10' }
+          - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.11' }
+          - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.12' }
     runs-on: ${{ matrix.variant.runner }}
     name: python${{ matrix.variant.py-version }} / ${{ matrix.variant.runner }} / ${{ matrix.variant.config }}
     env:
@@ -49,10 +49,9 @@ jobs:
       if: startsWith(matrix.variant.runner, 'windows-')
       run: |
         Import-Module .\.github\Invoke-VisualStudio.ps1
+        Invoke-VisualStudio2019${{ matrix.variant.arch }}
         python -m pip install aqtinstall --user --upgrade
         python -m aqt install-qt -O build windows desktop ${{ env.QT_VERSION }} ${{ matrix.variant.qt-compiler }}
-        Invoke-VisualStudio2019${{ matrix.variant.arch }}
-        echo 'cmake.args = ["-G", "Visual Studio 16 2019"]' >> pyproject.toml
 
     - name: Environment Setup (Linux)
       if: startsWith(matrix.variant.runner, 'ubuntu-')
