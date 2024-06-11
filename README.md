@@ -7,13 +7,11 @@ Native Python 3.8+ bindings for [@horsicq](https://github.com/horsicq/)'s [Detec
 
 ### From PIP
 
-> [!CAUTION]
-> WIP - Not ready yet
+The easiest and recommended installation is through `pip`.
 
 ```console
+pip install die-python
 ```
-
-
 
 ### Using Git
 
