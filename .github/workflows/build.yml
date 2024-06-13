@@ -106,10 +106,8 @@ jobs:
       run: |
         python -m pytest -v python/tests
 
-    - name: Build WHL
-      run: |
-        mkdir wheel
-        python -m pip wheel . --wheel-dir ./wheel --progress-bar on
+    - name: Build wheels
+      uses: pypa/cibuildwheel@v2.19.1
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
@@ -117,6 +115,7 @@ jobs:
         name: die-python-py${{ matrix.variant.py-version }}-${{ matrix.variant.runner }}.${{ matrix.variant.config }}
         path: |
           wheel/die_python-*.whl
+          wheelhouse/die_python-*.whl
         if-no-files-found: error
         retention-days: 1
 
