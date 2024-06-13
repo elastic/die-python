@@ -116,7 +116,7 @@ jobs:
       with:
         name: die-python-py${{ matrix.variant.py-version }}-${{ matrix.variant.runner }}.${{ matrix.variant.config }}
         path: |
-          wheel/*.whl
+          wheel/die_python-*.whl
         if-no-files-found: error
         retention-days: 1
 
