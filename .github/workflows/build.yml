@@ -107,21 +107,20 @@ jobs:
         python -m pytest -v python/tests
 
     - name: Build wheels (Linux)
-      if: startsWith(matrix.variant.runner, 'ubuntu-')
+      if: startsWith(matrix.variant.runner, 'ubuntu-') == true && matrix.variant.py-version == '3.8'
       uses: pypa/cibuildwheel@v2.19.1
 
     - name: Build wheels (Others)
       if: startsWith(matrix.variant.runner, 'ubuntu-') == false
       run: |
-        mkdir wheel
-        python -m pip wheel . --wheel-dir wheel --progress-bar on
+        mkdir wheelhouse
+        python -m pip wheel . --wheel-dir wheelhouse --progress-bar on
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: die-python-py${{ matrix.variant.py-version }}-${{ matrix.variant.runner }}.${{ matrix.variant.config }}
         path: |
-          wheel/die_python-*.whl
           wheelhouse/die_python-*.whl
         if-no-files-found: error
         retention-days: 1
