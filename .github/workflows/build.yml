@@ -106,8 +106,15 @@ jobs:
       run: |
         python -m pytest -v python/tests
 
-    - name: Build wheels
+    - name: Build wheels (Linux)
+      if: startsWith(matrix.variant.runner, 'ubuntu-')
       uses: pypa/cibuildwheel@v2.19.1
+
+    - name: Build wheels (Others)
+      if: startsWith(matrix.variant.runner, 'ubuntu-') == false
+      run: |
+        mkdir wheel
+        python -m pip wheel . --wheel-dir wheel --progress-bar on
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
