@@ -44,3 +44,11 @@ cmake.minimum-version = "3.20"
 # cmake.verbose = true
 # logging.level = "DEBUG"
 # cmake.build-type = "Debug"
+
+[tool.cibuildwheel]
+build = "*"
+skip = "cp27-* cp35-* cp36-* cp37-* pp*"
+test-skip = ""
+free-threaded-support = false
+archs = ["x86_64"]
+manylinux-x86_64-image = "manylinux_2_28"
