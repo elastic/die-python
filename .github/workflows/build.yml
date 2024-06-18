@@ -106,18 +106,23 @@ jobs:
       run: |
         python -m pytest -v python/tests
 
-    - name: Build WHL
+    - name: Build wheels (Linux)
+      if: startsWith(matrix.variant.runner, 'ubuntu-') == true && matrix.variant.py-version == '3.8'
+      uses: pypa/cibuildwheel@v2.19.1
+
+    - name: Build wheels (Others)
+      if: startsWith(matrix.variant.runner, 'ubuntu-') == false
       run: |
-        mkdir wheel
-        python -m pip wheel . --wheel-dir ./wheel --progress-bar on
+        mkdir wheelhouse
+        python -m pip wheel . --wheel-dir wheelhouse --progress-bar on
 
     - name: Upload artifacts
+      if: startsWith(matrix.variant.runner, 'ubuntu-') == false || matrix.variant.py-version != '3.8'
       uses: actions/upload-artifact@v4
       with:
         name: die-python-py${{ matrix.variant.py-version }}-${{ matrix.variant.runner }}.${{ matrix.variant.config }}
         path: |
-          wheel/die_python-*.whl
-        if-no-files-found: error
+          wheelhouse/die_python-*.whl
         retention-days: 1
 
   publish:
@@ -133,10 +138,10 @@ jobs:
           - {runner: macos-13,      config: Release,         py-version: '3.11' }
           - {runner: macos-13,      config: Release,         py-version: '3.12' }
           - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.8' }
-          - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.9' }
-          - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.10' }
-          - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.11' }
-          - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.12' }
+          # - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.9' }
+          # - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.10' }
+          # - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.11' }
+          # - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.12' }
           - {runner: windows-2019,  config: RelWithDebInfo,  py-version: '3.8' }
           - {runner: windows-2019,  config: RelWithDebInfo,  py-version: '3.9' }
           - {runner: windows-2019,  config: RelWithDebInfo,  py-version: '3.10' }

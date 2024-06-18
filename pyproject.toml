@@ -44,3 +44,13 @@ cmake.minimum-version = "3.20"
 # cmake.verbose = true
 # logging.level = "DEBUG"
 # cmake.build-type = "Debug"
+
+[tool.cibuildwheel]
+build = ""
+skip = "cp27-* cp35-* cp36-* cp37-* pp* *musllinux*"
+test-skip = ""
+free-threaded-support = false
+# use images from https://github.com/pypa/manylinux
+archs = ["x86_64"]
+manylinux-x86_64-image = "manylinux_2_28"
+musllinux-x86_64-image = "musllinux_1_2"
