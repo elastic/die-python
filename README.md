@@ -1,5 +1,11 @@
 # DetectItEasy-Python
 
+[![Python 3.8+](https://img.shields.io/pypi/v/die-python.svg)](https://pypi.org/project/die-python/)
+[![Downloads](https://static.pepy.tech/badge/die-python)](https://pepy.tech/project/die-python)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Licence Apache2](https://img.shields.io/badge/License-Apache_2-blue)](https://github.com/elastic/die-python/blob/main/LICENSE)
+[![Build](https://github.com/elastic/die-python/actions/workflows/build.yml/badge.svg)](https://github.com/elastic/die-python/actions/workflows/build.yml)
+
 Native Python 3.8+ bindings for [@horsicq](https://github.com/horsicq/)'s [Detect-It-Easy](https://github.com/horsicq/Detect-It-Easy)
 
 
@@ -16,7 +22,7 @@ pip install die-python
 ### Using Git
 
 ```console
-git clone https://github.com/calladoum-elastic/die-python
+git clone https://github.com/elastic/die-python
 cd die-python
 ```
 
