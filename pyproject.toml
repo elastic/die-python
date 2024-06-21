@@ -26,7 +26,7 @@ dependencies = ["setuptools", "wheel", "nanobind"]
 tests = ["pytest", "black", "beautifulsoup4", "lxml"]
 
 [project.urls]
-Homepage = "https://github.com/calladoum-elastic/die_python"
+Homepage = "https://github.com/elastic/die-python"
 
 [tool.isort]
 profile = "black"
