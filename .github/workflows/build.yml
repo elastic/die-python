@@ -116,13 +116,11 @@ jobs:
       run: |
         python -m pytest -v python/tests
 
-    - name: Build wheels (Linux) 1/2
-      if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.8'
-      run: rm -fr build
-
-    - name: Build wheels (Linux) 2/2
-      if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.8'
-      uses: pypa/cibuildwheel@v2.19.1
+    - name: Build wheels (Linux)
+      if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.12'
+      run: |
+        python -m pip install cibuildwheel==2.20.0
+        python -m cibuildwheel --output-dir wheelhouse
 
     - name: Build wheels (Others)
       if: startsWith(matrix.variant.runner, 'ubuntu-') == false
