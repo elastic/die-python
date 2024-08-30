@@ -32,11 +32,21 @@ jobs:
           - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.10' }
           - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.11' }
           - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: ubuntu-24.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.8' }
+          - {runner: ubuntu-24.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.9' }
+          - {runner: ubuntu-24.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.10' }
+          - {runner: ubuntu-24.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.11' }
+          - {runner: ubuntu-24.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.12' }
           - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.8' }
           - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.9' }
           - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.10' }
           - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.11' }
           - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.8' }
+          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.9' }
+          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.10' }
+          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.11' }
+          - {runner: windows-2022,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.12' }
     runs-on: ${{ matrix.variant.runner }}
     name: python${{ matrix.variant.py-version }} / ${{ matrix.variant.runner }} / ${{ matrix.variant.config }}
     env:
@@ -107,8 +117,12 @@ jobs:
         python -m pytest -v python/tests
 
     - name: Build wheels (Linux)
-      if: startsWith(matrix.variant.runner, 'ubuntu-') == true && matrix.variant.py-version == '3.8'
-      uses: pypa/cibuildwheel@v2.19.1
+      if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.12'
+      run: |
+        python -m pip uninstall --quiet --yes die-python
+        rm -fr -- build/cp312-*
+        python -m pip install cibuildwheel==2.20.0
+        python -m cibuildwheel --output-dir wheelhouse
 
     - name: Build wheels (Others)
       if: startsWith(matrix.variant.runner, 'ubuntu-') == false
@@ -137,7 +151,8 @@ jobs:
           - {runner: macos-13,      config: Release,         py-version: '3.10' }
           - {runner: macos-13,      config: Release,         py-version: '3.11' }
           - {runner: macos-13,      config: Release,         py-version: '3.12' }
-          - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.8' }
+          - {runner: ubuntu-24.04,  config: RelWithDebInfo,  py-version: '3.12' }
+          # - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.8' }
           # - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.9' }
           # - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.10' }
           # - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.11' }
