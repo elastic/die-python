@@ -119,6 +119,8 @@ jobs:
     - name: Build wheels (Linux)
       if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.12'
       run: |
+        python -m pip uninstall die-python
+        rm -fr -- build/cp312-*
         python -m pip install cibuildwheel==2.20.0
         python -m cibuildwheel --output-dir wheelhouse
 
