@@ -119,7 +119,7 @@ jobs:
     - name: Build wheels (Linux)
       if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.12'
       run: |
-        python -m pip uninstall die-python
+        python -m pip uninstall --quiet --yes die-python
         rm -fr -- build/cp312-*
         python -m pip install cibuildwheel==2.20.0
         python -m cibuildwheel --output-dir wheelhouse
@@ -151,7 +151,8 @@ jobs:
           - {runner: macos-13,      config: Release,         py-version: '3.10' }
           - {runner: macos-13,      config: Release,         py-version: '3.11' }
           - {runner: macos-13,      config: Release,         py-version: '3.12' }
-          - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.8' }
+          - {runner: ubuntu-24.04,  config: RelWithDebInfo,  py-version: '3.12' }
+          # - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.8' }
           # - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.9' }
           # - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.10' }
           # - {runner: ubuntu-22.04,  config: RelWithDebInfo,  py-version: '3.11' }
