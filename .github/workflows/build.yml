@@ -32,6 +32,11 @@ jobs:
           - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.10' }
           - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.11' }
           - {runner: ubuntu-22.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: ubuntu-24.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.8' }
+          - {runner: ubuntu-24.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.9' }
+          - {runner: ubuntu-24.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.10' }
+          - {runner: ubuntu-24.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.11' }
+          - {runner: ubuntu-24.04,   arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.12' }
           - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.8' }
           - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.9' }
           - {runner: windows-2019,   arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.10' }
@@ -111,8 +116,12 @@ jobs:
       run: |
         python -m pytest -v python/tests
 
-    - name: Build wheels (Linux)
-      if: startsWith(matrix.variant.runner, 'ubuntu-') == true && matrix.variant.py-version == '3.8'
+    - name: Build wheels (Linux) 1/2
+      if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.8'
+      run: rm -fr build
+
+    - name: Build wheels (Linux) 2/2
+      if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.8'
       uses: pypa/cibuildwheel@v2.19.1
 
     - name: Build wheels (Others)
