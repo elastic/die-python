@@ -47,7 +47,7 @@ python -m pip install . --user -U
 ```python
 import die, pathlib
 
-print(die.scan_file("c:/windows/system32/ntdll.dll", die.ScanFlags.Deepscan))
+print(die.scan_file("c:/windows/system32/ntdll.dll", die.ScanFlags.DEEP_SCAN))
 'PE64'
 
 print(die.scan_file("../upx.exe", die.ScanFlags.RESULT_AS_JSON, str(die.database_path/'db') ))
