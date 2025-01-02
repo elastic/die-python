@@ -48,16 +48,17 @@ def test_constants():
         ]
     )
 
-
-def test_scan_basic():
-    default_target = (
+@pytest.fixture
+def target_binary():
+    return (
         pathlib.Path("c:/windows/system32/winver.exe")
         if platform.system() == "Windows"
         else pathlib.Path("/bin/ls")
     )
 
+def test_scan_basic(target_binary: pathlib.Path):
     res = die.scan_file(
-        default_target,
+        target_binary,
         die.ScanFlags.DEEP_SCAN,
     )
     assert res
@@ -72,14 +73,6 @@ def test_scan_basic():
         assert lines[0] == "ELF64"
 
 
-@pytest.fixture
-def target_binary():
-    return (
-        pathlib.Path("c:/windows/system32/winver.exe")
-        if platform.system() == "Windows"
-        else pathlib.Path("/bin/ls")
-    )
-
 def test_scan_export_format_json(target_binary: pathlib.Path):
     res = die.scan_file(
         target_binary,
@@ -93,6 +86,7 @@ def test_scan_export_format_json(target_binary: pathlib.Path):
         assert js["detects"][0]["filetype"] == "PE64"
     elif platform.system() == "Linux":
         assert js["detects"][0]["filetype"] == "ELF64"
+
 
 def test_scan_export_format_xml(target_binary: pathlib.Path) -> None:
     res = die.scan_file(
@@ -109,6 +103,7 @@ def test_scan_export_format_xml(target_binary: pathlib.Path) -> None:
         assert hasattr(xml.Result, "ELF64")
         assert xml.Result.ELF64["filetype"] == "ELF64"
 
+
 def test_scan_export_format_csv(target_binary: pathlib.Path):
     CSV_DELIMITER = ";"
     res = die.scan_file(
@@ -116,9 +111,9 @@ def test_scan_export_format_csv(target_binary: pathlib.Path):
         die.ScanFlags.DEEP_SCAN | die.ScanFlags.RESULT_AS_CSV,
     )
     assert res
-
     assert len(res.splitlines()) == 1
     assert len(res.split(CSV_DELIMITER)) == 5
+
 
 def test_scan_export_format_tsv(target_binary: pathlib.Path):
     res = die.scan_file(
@@ -134,6 +129,7 @@ def test_scan_export_format_tsv(target_binary: pathlib.Path):
         assert lines[0] == "PE64"
     elif platform.system() == "Linux":
         assert lines[0] == "ELF64"
+
 
 def test_basic_databases():
     for db in die.databases():
