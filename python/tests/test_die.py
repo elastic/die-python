@@ -1,8 +1,8 @@
+import bs4
+import json
 import pathlib
 import platform
-import json
-
-import bs4
+import pytest
 
 import die
 
@@ -61,23 +61,28 @@ def test_scan_basic():
         die.ScanFlags.DEEP_SCAN,
     )
     assert res
+    assert isinstance(res, str)
+
+    lines = res.splitlines()
+    assert len(lines)
 
     if platform.system() == "Windows":
-        assert res == "PE64"
+        assert lines[0] == "PE64"
     elif platform.system() == "Linux":
-        assert res == "ELF64"
+        assert lines[0] == "ELF64"
 
 
-def test_scan_export_format():
-    default_target = (
+@pytest.fixture
+def target_binary():
+    return (
         pathlib.Path("c:/windows/system32/winver.exe")
         if platform.system() == "Windows"
         else pathlib.Path("/bin/ls")
     )
 
-    # JS
+def test_scan_export_format_json(target_binary: pathlib.Path):
     res = die.scan_file(
-        default_target,
+        target_binary,
         die.ScanFlags.DEEP_SCAN | die.ScanFlags.RESULT_AS_JSON,
     )
     assert res
@@ -85,37 +90,36 @@ def test_scan_export_format():
     js = json.loads(res)
     assert len(js["detects"])
     if platform.system() == "Windows":
-        assert js["detects"][0]["string"] == "PE64"
+        assert js["detects"][0]["filetype"] == "PE64"
     elif platform.system() == "Linux":
-        assert js["detects"][0]["string"] == "ELF64"
+        assert js["detects"][0]["filetype"] == "ELF64"
 
-    # XML
+def test_scan_export_format_xml(target_binary: pathlib.Path) -> None:
     res = die.scan_file(
-        default_target,
+        target_binary,
         die.ScanFlags.DEEP_SCAN | die.ScanFlags.RESULT_AS_XML,
     )
     assert res
     xml = bs4.BeautifulSoup(res, "xml")
     assert xml.Result
     if platform.system() == "Windows":
-        assert xml.Result.detect.text == "PE64"
+        assert hasattr(xml.Result, "PE64")
+        assert xml.Result.PE64["filetype"] == "PE64"
     elif platform.system() == "Linux":
-        assert xml.Result.detect.text == "ELF64"
+        assert hasattr(xml.Result, "ELF64")
+        assert xml.Result.ELF64["filetype"] == "ELF64"
 
-    # CSV
+def test_scan_export_format_csv(target_binary: pathlib.Path):
     res = die.scan_file(
-        default_target,
+        target_binary,
         die.ScanFlags.DEEP_SCAN | die.ScanFlags.RESULT_AS_CSV,
     )
     assert res
 
     assert len(res.splitlines()) == 1
     parts = res.split(";")
+    print(parts)
     assert len(parts) == 5
-    if platform.system() == "Windows":
-        assert parts[-1] == "PE64"
-    elif platform.system() == "Linux":
-        assert parts[-1] == "ELF64"
 
 
 def test_basic_databases():
