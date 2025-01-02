@@ -110,6 +110,7 @@ def test_scan_export_format_xml(target_binary: pathlib.Path) -> None:
         assert xml.Result.ELF64["filetype"] == "ELF64"
 
 def test_scan_export_format_csv(target_binary: pathlib.Path):
+    CSV_DELIMITER = ";"
     res = die.scan_file(
         target_binary,
         die.ScanFlags.DEEP_SCAN | die.ScanFlags.RESULT_AS_CSV,
@@ -117,10 +118,22 @@ def test_scan_export_format_csv(target_binary: pathlib.Path):
     assert res
 
     assert len(res.splitlines()) == 1
-    parts = res.split(";")
-    print(parts)
-    assert len(parts) == 5
+    assert len(res.split(CSV_DELIMITER)) == 5
 
+def test_scan_export_format_tsv(target_binary: pathlib.Path):
+    res = die.scan_file(
+        target_binary,
+        die.ScanFlags.DEEP_SCAN | die.ScanFlags.RESULT_AS_TSV,
+    )
+    assert res
+
+    lines = res.splitlines()
+    assert len(lines)
+
+    if platform.system() == "Windows":
+        assert lines[0] == "PE64"
+    elif platform.system() == "Linux":
+        assert lines[0] == "ELF64"
 
 def test_basic_databases():
     for db in die.databases():
