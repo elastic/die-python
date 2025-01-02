@@ -7,13 +7,13 @@ set(ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/..")
 set(QT_BUILD_VERSION "6.6.2")
 
 if(WIN32)
-  # python -m aqt  install-qt windows desktop ${QT_BUILD_VERSION} win64_msvc2019_64
+  # python -m aqt install-qt windows desktop ${QT_BUILD_VERSION} win64_msvc2019_64
   set(QT_BUILD_COMPILER "msvc2019_64")
 elseif(LINUX)
-  # python -m aqt  install-qt linux desktop ${QT_BUILD_VERSION} gcc_64
+  # python -m aqt install-qt linux desktop ${QT_BUILD_VERSION} gcc_64
   set(QT_BUILD_COMPILER "gcc_64")
 elseif(APPLE)
-  # python -m aqt  install-qt mac desktop ${QT_BUILD_VERSION} clang_64
+  # python -m aqt install-qt mac desktop ${QT_BUILD_VERSION} clang_64
   set(QT_BUILD_COMPILER "macos")
 else()
   message(FATAL "nope")
@@ -27,10 +27,9 @@ find_package(Qt6 REQUIRED COMPONENTS Core Qml Concurrent)
 
 FetchContent_Declare(
   DieLibrary
-  # GIT_REPOSITORY "https://github.com/calladoum-elastic/die_library"
-  # GIT_TAG ff412022d34289115426ba1cb7b8663d728f7bb3
   GIT_REPOSITORY "https://github.com/horsicq/die_library"
-  GIT_TAG 2b4d6e986b273fd20e3f6733bfe244d2fa85892a
+  # GIT_TAG 2b4d6e986b273fd20e3f6733bfe244d2fa85892a
+  GIT_TAG ebe34ba3b3a38d5f40c02064a116faec7376bad3
 )
 
 set(DIE_BUILD_AS_STATIC ON CACHE INTERNAL "")
