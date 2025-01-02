@@ -6,3 +6,6 @@ __pycache__
 aqtinstall.log
 wheel
 wheelhouse
+.vscode
+.venv
+6.*
