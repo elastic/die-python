@@ -1,7 +1,7 @@
 project(
     die-python
     LANGUAGES CXX
-    VERSION 0.2.0
+    VERSION 0.3.0
 )
 
 find_package(Python 3
