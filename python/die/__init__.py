@@ -5,7 +5,12 @@ from typing import Generator, Optional, Union
 
 from ._die import __version__  # type: ignore
 from ._die import DieFlags as _DieFlags  # type: ignore
-from ._die import ScanFileA as _ScanFileA  # type: ignore
+from ._die import (
+    ScanFileA as _ScanFileA,  # type: ignore
+    ScanFileExA as _ScanFileExA,  # type: ignore
+    ScanMemoryA as _ScanMemoryA,  # type: ignore
+    ScanMemoryExA as _ScanMemoryExA,  # type: ignore
+)
 from ._die import die_version, dielib_version  # type: ignore
 
 version_major, version_minor, version_patch = map(int, __version__.split("."))
@@ -27,15 +32,15 @@ class ScanFlags(enum.IntFlag):
 
 
 def scan_file(
-    filepath: Union[pathlib.Path, str], flags: ScanFlags, database: str = ""
+    filepath: Union[pathlib.Path, str], flags: ScanFlags, database: Optional[str] = None
 ) -> Optional[str]:
     """
-    Scan the given file against the signature database
+    Scan the given file against the signature database, if specified
 
     Arguments:
         filepath: Union[pathlib.Path, str]
         flags: ScanFlags
-        database: str = ""
+        database: Optional[str]
 
     Returns:
         Optional[str]
@@ -50,12 +55,13 @@ def scan_file(
     assert _fpath.exists()
 
     # Check `database`
-    if not isinstance(database, str):
-        raise TypeError
+    if database is None:
+        res = _ScanFileExA(str(_fpath), flags)
+    elif isinstance(database, str):
+        res = _ScanFileA(str(_fpath), flags, database)
     else:
-        _db = database
+        raise TypeError
 
-    res = _ScanFileA(str(_fpath), flags, _db)
     if not res:
         return None
     return res.strip()
@@ -77,3 +83,32 @@ def databases() -> Generator[pathlib.Path, None, None]:
                 yield from __enum_db(child)
 
     return __enum_db(database_path)
+
+
+def scan_memory(
+    memory: bytes, flags: ScanFlags, database: Optional[str] = None
+) -> Optional[str]:
+    """
+    Scan the given sequence of bytes against the signature database, if specified
+
+    Arguments:
+        memory: bytes
+        flags: ScanFlags
+        database: Optional[str]
+
+    Returns:
+        Optional[str]
+    """
+    if not isinstance(memory, bytes):
+        raise TypeError
+
+    if database is None:
+        res = _ScanMemoryExA(memory, flags)
+    elif isinstance(database, str):
+        res = _ScanMemoryA(memory, flags, database)
+    else:
+        raise TypeError
+
+    if not res:
+        return None
+    return res.strip()
