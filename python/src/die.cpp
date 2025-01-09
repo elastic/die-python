@@ -127,13 +127,19 @@ NB_MODULE(_die, m)
     m.attr("die_version")    = DIE_VERSION;
     m.attr("dielib_version") = DIELIB_VERSION;
 
-    m.def(
-        "ScanFileA",
-        DIE::ScanFileA,
-        "pszFileName"_a,
-        "nFlags"_a,
-        "pszDatabase"_a,
-        "Scan a file against known signatures");
+    m.def("ScanFileA", DIE::ScanFileA, "filename"_a, "flags"_a, "database"_a, "Scan a file against known signatures");
 
-    m.def("ScanFileExA", DIE::ScanFileExA, "pwszFileName"_a, "nFlags"_a, "Scan a file");
+    m.def("ScanFileExA", DIE::ScanFileExA, "filename"_a, "flags"_a, "Scan a file");
+
+    m.def(
+        "ScanMemoryA",
+        DIE::ScanMemoryA,
+        "memory"_a,
+        "flags"_a,
+        "database"_a,
+        "Scan sequence of bytes against known signatures");
+
+    m.def("ScanMemoryExA", DIE::ScanMemoryExA, "memory"_a, "flags"_a, "Scan sequence of bytes");
+
+    m.def("LoadDatabaseA", DIE::LoadDatabaseA, "database"_a, "Load signature database");
 }
