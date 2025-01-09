@@ -87,7 +87,7 @@ def databases() -> Generator[pathlib.Path, None, None]:
 
 
 def scan_memory(
-    memory: bytes, flags: ScanFlags, database: Optional[str] = None
+    memory: Union[bytes, bytearray], flags: ScanFlags, database: Optional[str] = None
 ) -> Optional[str]:
     """
     Scan the given sequence of bytes against the signature database, if specified
@@ -100,7 +100,7 @@ def scan_memory(
     Returns:
         Optional[str]
     """
-    if not isinstance(memory, bytes):
+    if not isinstance(memory, bytes) and not isinstance(memory, bytearray):
         raise TypeError
 
     if database is None:

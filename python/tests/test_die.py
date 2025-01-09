@@ -48,6 +48,7 @@ def test_constants():
         ]
     )
 
+
 @pytest.fixture
 def target_binary():
     return (
@@ -56,10 +57,11 @@ def target_binary():
         else pathlib.Path("/bin/ls")
     )
 
+
 def test_scan_memory(target_binary: pathlib.Path):
     raw_data = target_binary.read_bytes()
     res = die.scan_memory(
-        raw_data,
+        bytearray(raw_data),
         die.ScanFlags.DEEP_SCAN,
     )
     assert res
@@ -72,6 +74,7 @@ def test_scan_memory(target_binary: pathlib.Path):
         assert lines[0] == "PE64"
     elif platform.system() == "Linux":
         assert lines[0] == "ELF64"
+
 
 def test_scan_basic(target_binary: pathlib.Path):
     res = die.scan_file(
