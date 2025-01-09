@@ -42,6 +42,9 @@ ScanMemoryA(std::vector<uint8_t>& memory, uint32_t nFlags, std::string& pszDatab
 std::optional<std::string>
 ScanMemoryExA(std::vector<uint8_t>& pszFileName, uint32_t nFlags);
 
+int32_t
+LoadDatabaseA(std::string& pszDatabase);
+
 
 #ifdef _WIN32
 int

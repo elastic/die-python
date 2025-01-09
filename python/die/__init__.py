@@ -10,6 +10,7 @@ from ._die import (
     ScanFileExA as _ScanFileExA,  # type: ignore
     ScanMemoryA as _ScanMemoryA,  # type: ignore
     ScanMemoryExA as _ScanMemoryExA,  # type: ignore
+    LoadDatabaseA as _LoadDatabaseA,  # type: ignore
 )
 from ._die import die_version, dielib_version  # type: ignore
 
@@ -112,3 +113,13 @@ def scan_memory(
     if not res:
         return None
     return res.strip()
+
+
+def load_database(database: str) -> int:
+    """
+    Load a database
+    """
+    if not isinstance(database, str):
+        raise TypeError
+
+    return _LoadDatabaseA(database)

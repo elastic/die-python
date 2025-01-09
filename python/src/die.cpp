@@ -81,6 +81,12 @@ ScanMemoryExA(std::vector<uint8_t>& memory, uint32_t flags)
     return res_str;
 }
 
+int32_t
+LoadDatabaseA(std::string& pszDatabase)
+{
+    return ::DIE_LoadDatabaseA(pszDatabase.data());
+}
+
 #ifdef _WIN32
 int
 VB_ScanFile(
