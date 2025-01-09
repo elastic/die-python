@@ -2,6 +2,7 @@
 
 #include <optional>
 #include <string>
+#include <vector>
 
 #include "die.h"
 
@@ -32,8 +33,18 @@ enum class DieFlags : uint32_t
 std::optional<std::string>
 ScanFileA(std::string& pszFileName, uint32_t nFlags, std::string& pszDatabase);
 
-std::optional<std::wstring>
-ScanFileW(std::wstring& pwszFileName, uint32_t nFlags, std::wstring& pwszDatabase);
+std::optional<std::string>
+ScanFileExA(std::string& pszFileName, uint32_t nFlags);
+
+std::optional<std::string>
+ScanMemoryA(std::vector<uint8_t>& memory, uint32_t nFlags, std::string& pszDatabase);
+
+std::optional<std::string>
+ScanMemoryExA(std::vector<uint8_t>& pszFileName, uint32_t nFlags);
+
+int32_t
+LoadDatabaseA(std::string& pszDatabase);
+
 
 #ifdef _WIN32
 int

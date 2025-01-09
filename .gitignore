@@ -9,3 +9,4 @@ wheelhouse
 .vscode
 .venv
 6.*
+/uv.lock

@@ -4,6 +4,7 @@
 #include <nanobind/stl/filesystem.h>
 #include <nanobind/stl/optional.h>
 #include <nanobind/stl/string.h>
+#include <nanobind/stl/vector.h>
 
 #include <array>
 #include <filesystem>
@@ -31,19 +32,60 @@ ScanFileA(std::string& pszFileName, uint32_t nFlags, std::string& pszDatabase)
     return res_str;
 }
 
-std::optional<std::wstring>
-ScanFileW(std::wstring& pwszFileName, uint32_t nFlags, std::wstring& pwszDatabase)
+std::optional<std::string>
+ScanFileExA(std::string& pszFileName, uint32_t nFlags)
 {
-    auto res = ::DIE_ScanFileW(pwszFileName.data(), static_cast<int>(nFlags), pwszDatabase.data());
+    auto res = ::DIE_ScanFileExA(pszFileName.data(), static_cast<int>(nFlags));
     if ( res == nullptr )
     {
         return std::nullopt;
     }
 
-    ::DIE_FreeMemoryW(res);
-    return std::wstring(res);
+    auto const res_str = std::string(res);
+    ::DIE_FreeMemoryA(res);
+    return res_str;
 }
 
+std::optional<std::string>
+ScanMemoryA(std::vector<uint8_t>& memory, uint32_t flags, std::string& database)
+{
+    char* pMemory     = (char*)memory.data();
+    int nMemorySize   = static_cast<int>(memory.size());
+    int nFlags        = static_cast<int>(flags);
+    char* pszDatabase = database.data();
+    auto res          = ::DIE_ScanMemoryA(pMemory, nMemorySize, nFlags, pszDatabase);
+    if ( res == nullptr )
+    {
+        return std::nullopt;
+    }
+
+    auto const res_str = std::string(res);
+    ::DIE_FreeMemoryA(res);
+    return res_str;
+}
+
+std::optional<std::string>
+ScanMemoryExA(std::vector<uint8_t>& memory, uint32_t flags)
+{
+    char* pMemory   = (char*)memory.data();
+    int nMemorySize = static_cast<int>(memory.size());
+    int nFlags      = static_cast<int>(flags);
+    auto res        = ::DIE_ScanMemoryExA(pMemory, nMemorySize, nFlags);
+    if ( res == nullptr )
+    {
+        return std::nullopt;
+    }
+
+    auto const res_str = std::string(res);
+    ::DIE_FreeMemoryA(res);
+    return res_str;
+}
+
+int32_t
+LoadDatabaseA(std::string& pszDatabase)
+{
+    return ::DIE_LoadDatabaseA(pszDatabase.data());
+}
 
 #ifdef _WIN32
 int
@@ -85,6 +127,19 @@ NB_MODULE(_die, m)
     m.attr("die_version")    = DIE_VERSION;
     m.attr("dielib_version") = DIELIB_VERSION;
 
-    m.def("ScanFileA", DIE::ScanFileA, "pszFileName"_a, "nFlags"_a, "pszDatabase"_a, "Scan a file (ascii string)");
-    m.def("ScanFileW", DIE::ScanFileW, "pwszFileName"_a, "nFlags"_a, "pszDatabase"_a, "Scan a file (unicode string)");
+    m.def("ScanFileA", DIE::ScanFileA, "filename"_a, "flags"_a, "database"_a, "Scan a file against known signatures");
+
+    m.def("ScanFileExA", DIE::ScanFileExA, "filename"_a, "flags"_a, "Scan a file");
+
+    m.def(
+        "ScanMemoryA",
+        DIE::ScanMemoryA,
+        "memory"_a,
+        "flags"_a,
+        "database"_a,
+        "Scan sequence of bytes against known signatures");
+
+    m.def("ScanMemoryExA", DIE::ScanMemoryExA, "memory"_a, "flags"_a, "Scan sequence of bytes");
+
+    m.def("LoadDatabaseA", DIE::LoadDatabaseA, "database"_a, "Load signature database");
 }
