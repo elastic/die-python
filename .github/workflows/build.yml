@@ -171,14 +171,16 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - name: Download artifact for ${{ matrix.variant.runner }}/${{ matrix.variant.py-version }}/${{ matrix.variant.config }}
+      - name: Download Wheel ${{ matrix.variant.runner }}/${{ matrix.variant.py-version }}/${{ matrix.variant.config }}
         uses: actions/download-artifact@v4
         id: download_wheels
         with:
           name: die-python-py${{ matrix.variant.py-version }}-${{ matrix.variant.runner }}.${{ matrix.variant.config }}
           path: .
-      - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          packages-dir: ${{ steps.download_wheels.outputs.download-path }}
-          print-hash: true
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Publish package
+        run: |
+          uv publish
