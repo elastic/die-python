@@ -36,8 +36,8 @@ jobs:
           # - {runner: ubuntu-24.04,      arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.9' }
           # - {runner: ubuntu-24.04,      arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.10' }
           # - {runner: ubuntu-24.04,      arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.11' }
-          - {runner: ubuntu-24.04,      arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.12' }
-          - {runner: ubuntu-24.04-arm,  arch: arm64, py-arch: arm64, qt-compiler: gcc_arm64,   config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: ubuntu-24.04,      qt-os: linux, arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: ubuntu-24.04-arm,  qt-os: linux_arm64, arch: arm64, py-arch: arm64, qt-compiler: gcc_arm64,   config: RelWithDebInfo, py-version: '3.12' }
           # - {runner: windows-2022,      arch: x64, py-arch: x64, qt-compiler: msvc2022_64,  config: RelWithDebInfo, py-version: '3.8' }
           # - {runner: windows-2022,      arch: x64, py-arch: x64, qt-compiler: msvc2022_64,  config: RelWithDebInfo, py-version: '3.9' }
           # - {runner: windows-2022,      arch: x64, py-arch: x64, qt-compiler: msvc2022_64,  config: RelWithDebInfo, py-version: '3.10' }
@@ -102,7 +102,7 @@ jobs:
       if: steps.cache-artifacts.outputs.cache-hit != 'true' && startsWith(matrix.variant.runner, 'ubuntu-')
       run: |
         python -m pip install aqtinstall --user --upgrade
-        python -m aqt install-qt -O build linux desktop ${{ env.QT_VERSION }} linux_${{ matrix.variant.qt-compiler }}
+        python -m aqt install-qt -O build ${{ matrix.variant.qt-os }} desktop ${{ env.QT_VERSION }} linux_${{ matrix.variant.qt-compiler }}
 
     - name: Python installation
       run: |
