@@ -116,7 +116,7 @@ jobs:
       if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.12'
       run: |
         python -m pip uninstall --quiet --yes die-python
-        rm -fr -- cp*
+        rm -fr -- build/cp*
         python -m pip install cibuildwheel==2.22.0
         python -m cibuildwheel --output-dir wheelhouse
 
