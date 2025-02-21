@@ -37,6 +37,7 @@ jobs:
           - {runner: ubuntu-24.04,   qt-os: linux,    arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.10' }
           - {runner: ubuntu-24.04,   qt-os: linux,    arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.11' }
           - {runner: ubuntu-24.04,   qt-os: linux,    arch: x64, py-arch: x64, qt-compiler: gcc_64,             config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: ubuntu-24.04-arm,   qt-os: linux_arm64,    arch: arm64, py-arch: arm64, qt-compiler: linux_gcc_arm64,   config: RelWithDebInfo, py-version: '3.12' }
           - {runner: windows-2019,   qt-os: windows,  arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.8' }
           - {runner: windows-2019,   qt-os: windows,  arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.9' }
           - {runner: windows-2019,   qt-os: windows,  arch: x64, py-arch: x64, qt-compiler: win64_msvc2019_64,  config: RelWithDebInfo, py-version: '3.10' }
@@ -52,7 +53,7 @@ jobs:
     name: python${{ matrix.variant.py-version }} / ${{ matrix.variant.runner }} / ${{ matrix.variant.config }}
     env:
       CMAKE_FLAGS: ""
-      QT_VERSION: 6.6.2
+      QT_VERSION: 6.8.2 # arm64 support in aqt appears from 6.8.x
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -77,7 +78,7 @@ jobs:
         echo CC=clang >> $GITHUB_ENV
         echo CXX=clang++ >> $GITHUB_ENV
 
-    - name: Environment Setup (MacOS)
+    - name: Environment Setup (macOS)
       if: startsWith(matrix.variant.runner, 'macos-')
       run: |
         echo CC=clang >> $GITHUB_ENV
@@ -106,7 +107,7 @@ jobs:
         python -m pytest -v python/tests
 
     - name: Build wheels (Linux)
-      if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.12'
+      if: startsWith(matrix.variant.runner, 'ubuntu-') && matrix.variant.py-version == '3.12'
       run: |
         python -m pip uninstall --quiet --yes die-python
         rm -fr -- build/cp312-*
