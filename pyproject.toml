@@ -8,16 +8,16 @@ version = "0.3.0"
 description = "Python bindings for Detect It Easy (DIE)."
 readme = "./README.md"
 license.file = "./LICENSE"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 authors = [{ name = "@calladoum-elastic" }]
 classifiers = [
     "Development Status :: 4 - Beta",
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Natural Language :: English",
 ]
 dependencies = ["setuptools", "wheel", "nanobind"]
@@ -47,10 +47,12 @@ cmake.minimum-version = "3.20"
 
 [tool.cibuildwheel]
 build = ""
-skip = "cp27-* cp35-* cp36-* cp37-* pp* *musllinux*"
+skip = "cp27-* cp35-* cp36-* cp37-* cp38-* pp* *musllinux*"
 test-skip = ""
 free-threaded-support = false
 # use images from https://github.com/pypa/manylinux
-archs = ["x86_64"]
+archs = ["x86_64", "aarch64"]
 manylinux-x86_64-image = "manylinux_2_28"
+manylinux-aarch64-image = "manylinux_2_28"
 musllinux-x86_64-image = "musllinux_1_2"
+musllinux-aarch64-image = "musllinux_1_2"
