@@ -51,8 +51,6 @@ skip = "cp27-* cp35-* cp36-* cp37-* cp38-* pp* *musllinux*"
 test-skip = ""
 free-threaded-support = false
 # use images from https://github.com/pypa/manylinux
-# archs = ["x86_64", "aarch64"]
+archs = ["x86_64"]
 manylinux-x86_64-image = "manylinux_2_28"
-manylinux-aarch64-image = "manylinux_2_28"
 musllinux-x86_64-image = "musllinux_1_2"
-musllinux-aarch64-image = "musllinux_1_2"
