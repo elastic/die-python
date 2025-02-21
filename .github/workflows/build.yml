@@ -112,15 +112,15 @@ jobs:
       run: |
         python -m pytest -v python/tests
 
-    - name: Build wheels (Linux)
-      if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.12'
-      run: |
-        python -m pip uninstall --quiet --yes die-python
-        python -m pip install cibuildwheel==2.22.0
-        python -m cibuildwheel --output-dir wheelhouse --archs aarch64
+    # - name: Build wheels (Linux)
+    #   if: startsWith(matrix.variant.runner, 'ubuntu-') && matrix.variant.py-version == '3.12'
+    #   run: |
+    #     python -m pip uninstall --quiet --yes die-python
+    #     python -m pip install cibuildwheel==2.22.0
+    #     python -m cibuildwheel --output-dir wheelhouse --archs aarch64
 
     - name: Build wheels (Others)
-      if: startsWith(matrix.variant.runner, 'ubuntu-') == false
+      # if: startsWith(matrix.variant.runner, 'ubuntu-') == false
       run: |
         mkdir wheelhouse
         python -m pip wheel . --wheel-dir wheelhouse --progress-bar on
