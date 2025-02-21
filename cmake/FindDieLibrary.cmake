@@ -18,7 +18,7 @@ elseif(LINUX)
     set(QT_BUILD_COMPILER "gcc_64")
   endif()
 
-  if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "arm64")
+  if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "aarch64")
     # python -m aqt install-qt -O build linux_arm desktop ${QT_BUILD_VERSION} linux_gcc_arm64 (arm64)
     set(QT_BUILD_COMPILER "gcc_arm64")
   endif()
