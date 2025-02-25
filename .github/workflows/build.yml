@@ -132,8 +132,6 @@ jobs:
     - name: Build wheels (Others)
       if: startsWith(matrix.variant.runner, 'ubuntu-') == false
       run: |
-        python -m pip uninstall --quiet --yes die-python
-        rm -fr -- build/cp*
         mkdir wheelhouse
         python -m pip wheel . --wheel-dir wheel/ --progress-bar on
 
