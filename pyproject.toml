@@ -32,7 +32,7 @@ Homepage = "https://github.com/elastic/die-python"
 profile = "black"
 
 [tool.scikit-build]
-wheel.py-api = "cp312"
+wheel.py-api = "cp313"
 minimum-version = "0.4"
 build-dir = "build/{wheel_tag}"
 cmake.minimum-version = "3.20"
@@ -51,6 +51,8 @@ skip = "cp27-* cp35-* cp36-* cp37-* cp38-* pp* *musllinux*"
 test-skip = ""
 free-threaded-support = false
 # use images from https://github.com/pypa/manylinux
-archs = ["x86_64"]
+archs = ["x86_64", "aarch64"]
 manylinux-x86_64-image = "manylinux_2_28"
+manylinux-aarch64-image = "manylinux_2_28"
 musllinux-x86_64-image = "musllinux_1_2"
+musllinux-aarch64-image = "musllinux_1_2"
