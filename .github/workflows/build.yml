@@ -37,7 +37,7 @@ jobs:
           - {runner: ubuntu-24.04,      qt-os: linux,  arch: x64, py-arch: x64, qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.11' }
           - {runner: ubuntu-24.04,      qt-os: linux, arch: x64, py-arch: x64, qt-compiler: gcc_64,            config: RelWithDebInfo, py-version: '3.12' }
           - {runner: ubuntu-24.04,      qt-os: linux, arch: x64, py-arch: x64, qt-compiler: gcc_64,            config: RelWithDebInfo, py-version: '3.13' }
-          - {runner: ubuntu-24.04-arm,  qt-os: linux_arm64, arch: arm64, py-arch: arm64, qt-compiler: linux_gcc_arm64,   config: RelWithDebInfo, py-version: '3.13' }
+          - {runner: ubuntu-24.04-arm,  qt-os: linux_arm64, arch: arm64, py-arch: arm64, qt-compiler: gcc_arm64,   config: RelWithDebInfo, py-version: '3.13' }
           - {runner: windows-2022,      qt-os: windows,  arch: x64, py-arch: x64, qt-compiler: msvc2022_64,    config: RelWithDebInfo, py-version: '3.9' }
           - {runner: windows-2022,      qt-os: windows,  arch: x64, py-arch: x64, qt-compiler: msvc2022_64,    config: RelWithDebInfo, py-version: '3.10' }
           - {runner: windows-2022,      qt-os: windows,  arch: x64, py-arch: x64, qt-compiler: msvc2022_64,    config: RelWithDebInfo, py-version: '3.11' }
