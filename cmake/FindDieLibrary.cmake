@@ -28,7 +28,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Qml Concurrent)
 FetchContent_Declare(
   DieLibrary
   GIT_REPOSITORY "https://github.com/horsicq/die_library"
-  GIT_TAG ef5542fec4467fb53a4fec60180f55e83c0c9c8f
+  GIT_TAG 09df9ccafe48a0531987ad1e605402ed79d4c3f6
 )
 
 set(DIE_BUILD_AS_STATIC ON CACHE INTERNAL "")
