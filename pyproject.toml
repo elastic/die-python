@@ -4,7 +4,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "die_python"
-version = "0.3.0"
+version = "0.3.1"
 description = "Python bindings for Detect It Easy (DIE)."
 readme = "./README.md"
 license.file = "./LICENSE"
