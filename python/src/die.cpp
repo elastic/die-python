@@ -123,7 +123,7 @@ NB_MODULE(_die, m)
         .export_values();
 
     m.doc()                  = "The native `die` module";
-    m.attr("__version__")    = "0.3.0";
+    m.attr("__version__")    = "0.3.1";
     m.attr("die_version")    = DIE_VERSION;
     m.attr("dielib_version") = DIELIB_VERSION;
 
