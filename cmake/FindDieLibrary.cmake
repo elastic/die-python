@@ -9,8 +9,8 @@ set(QT_BUILD_VERSION "6.7.3")
 # TODO (calladoum) : here we oversimplify by assuming that compilation HOST and TARGET have same architecture
 
 if(WIN32)
-  # python -m aqt install-qt -O build windows desktop ${QT_BUILD_VERSION} win64_msvc2022_64
-  set(QT_BUILD_COMPILER "msvc2022_64")
+  # python -m aqt install-qt -O build windows desktop ${QT_BUILD_VERSION} win64_msvc2019_64
+  set(QT_BUILD_COMPILER "msvc2019_64")
 
 elseif(LINUX)
   if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "x86_64")
