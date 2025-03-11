@@ -4,7 +4,7 @@ cmake_path(SET ROOT_DIR NORMALIZE "${CMAKE_CURRENT_LIST_DIR}/..")
 
 # Only use Qt6
 
-set(QT_BUILD_VERSION "6.8.2")
+set(QT_BUILD_VERSION "6.7.3")
 
 # TODO (calladoum) : here we oversimplify by assuming that compilation HOST and TARGET have same architecture
 
