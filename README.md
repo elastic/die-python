@@ -26,13 +26,14 @@ git clone https://github.com/elastic/die-python
 cd die-python
 ```
 
-Install Qt into the `build`. It can be easily installed using [`aqt`](https://github.com/miurahr/aqtinstall) as follow (here with Qt version 6.6.2):
+Install Qt into the `build`. It can be easily installed using [`aqt`](https://github.com/miurahr/aqtinstall) as follow (here with Qt version 6.7.3):
 
 ```console
 python -m pip install aqtinstall --user -U
-python -m aqt install-qt -O ./build linux    desktop 6.6.2 gcc_64             # linux only
-python -m aqt install-qt -O ./build windows  desktop 6.6.2 win64_msvc2019_64  # windows only
-python -m aqt install-qt -O ./build mac      desktop 6.6.2 clang_64           # mac only
+python -m aqt install-qt -O ./build linux desktop 6.7.3 linux_gcc_64               # linux x64 only
+python -m aqt install-qt -O ./build linux_arm64 desktop 6.7.3 linux_gcc_arm64      # linux arm64 only
+python -m aqt install-qt -O ./build windows desktop 6.7.3 win64_msvc2019_64        # windows x64 only
+python -m aqt install-qt -O ./build mac desktop 6.7.3 clang_64                     # mac only
 ```
 
 Then you can install the package

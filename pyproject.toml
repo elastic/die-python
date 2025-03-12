@@ -8,16 +8,16 @@ version = "0.4.0"
 description = "Python bindings for Detect It Easy (DIE)."
 readme = "./README.md"
 license.file = "./LICENSE"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 authors = [{ name = "@calladoum-elastic" }]
 classifiers = [
     "Development Status :: 4 - Beta",
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Natural Language :: English",
 ]
 dependencies = ["setuptools", "wheel", "nanobind"]
@@ -32,7 +32,7 @@ Homepage = "https://github.com/elastic/die-python"
 profile = "black"
 
 [tool.scikit-build]
-wheel.py-api = "cp312"
+wheel.py-api = "cp313"
 minimum-version = "0.4"
 build-dir = "build/{wheel_tag}"
 cmake.minimum-version = "3.20"
@@ -46,11 +46,16 @@ cmake.minimum-version = "3.20"
 # cmake.build-type = "Debug"
 
 [tool.cibuildwheel]
+before-build = "dnf install libstdc++ glibc -y && ldconfig"
 build = ""
-skip = "cp27-* cp35-* cp36-* cp37-* pp* *musllinux*"
+skip = "cp27-* cp35-* cp36-* cp37-* cp38-* pp* *musllinux*"
 test-skip = ""
 free-threaded-support = false
 # use images from https://github.com/pypa/manylinux
-archs = ["x86_64"]
-manylinux-x86_64-image = "manylinux_2_28"
+archs = ["x86_64", "aarch64"]
+# manylinux-x86_64-image = "manylinux_2_28"
+# manylinux-aarch64-image = "manylinux_2_28"
+manylinux-x86_64-image = "quay.io/pypa/manylinux_2_34_x86_64"
+manylinux-aarch64-image = "quay.io/pypa/manylinux_2_34_aarch64"
 musllinux-x86_64-image = "musllinux_1_2"
+musllinux-aarch64-image = "musllinux_1_2"
