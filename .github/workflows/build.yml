@@ -184,4 +184,5 @@ jobs:
 
       - name: Publish package
         run: |
-          uv publish
+          mv */**/*.whl .
+          uv publish *.whl
