@@ -86,29 +86,11 @@ print(die.scan_file("../upx.exe", die.ScanFlags.RESULT_AS_JSON, str(die.database
 
 for db in die.databases():
     print(db)
-\path\to\your\pyenv\site-packages\die\db\.vscode\about.txt
-\path\to\your\pyenv\site-packages\die\db\.vscode\settings.json
 \path\to\your\pyenv\site-packages\die\db\ACE
 \path\to\your\pyenv\site-packages\die\db\Amiga\DeliTracker.1.sg
 \path\to\your\pyenv\site-packages\die\db\Amiga\_Amiga.0.sg
 \path\to\your\pyenv\site-packages\die\db\Amiga\_init
 \path\to\your\pyenv\site-packages\die\db\APK\AlibabaProtection.2.sg
-\path\to\your\pyenv\site-packages\die\db\APK\AndroidRepublic.2.sg
-\path\to\your\pyenv\site-packages\die\db\APK\APKProtect.2.sg
-\path\to\your\pyenv\site-packages\die\db\python
-\path\to\your\pyenv\site-packages\die\db\QtFramework
-\path\to\your\pyenv\site-packages\die\db\rar
-\path\to\your\pyenv\site-packages\die\db\read
-\path\to\your\pyenv\site-packages\die\db\RosASM
-\path\to\your\pyenv\site-packages\die\db\shell-script
-\path\to\your\pyenv\site-packages\die\db\SpASM
-\path\to\your\pyenv\site-packages\die\db\wxWidgets
-\path\to\your\pyenv\site-packages\die\db\ZIP\_init
-\path\to\your\pyenv\site-packages\die\db\ZIP\_ZIP.0.sg
-\path\to\your\pyenv\site-packages\die\db\zip-file
-\path\to\your\pyenv\site-packages\die\db\zlib
-\path\to\your\pyenv\site-packages\die\db\_debug
-\path\to\your\pyenv\site-packages\die\db\_init
 [...]
 ```
 

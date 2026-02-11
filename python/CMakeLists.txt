@@ -68,6 +68,18 @@ target_link_libraries(_die PRIVATE Qt6::Qml)
 target_link_libraries(_die PRIVATE Qt6::Concurrent)
 target_link_libraries(_die PRIVATE Qt6::Network)
 
+# Workaround: die_library on Windows installs db to site-packages/db
+# We need to remove it before our install rules that install to die/db
+if(WIN32)
+    install(CODE [[
+        set(WRONG_DB_DIR "${CMAKE_INSTALL_PREFIX}/db")
+        if(EXISTS "${WRONG_DB_DIR}")
+            execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory "${WRONG_DB_DIR}")
+            message(STATUS "Removed incorrectly installed database: ${WRONG_DB_DIR}")
+        endif()
+    ]])
+endif()
+
 install(DIRECTORY die DESTINATION .)
 install(TARGETS _die DESTINATION die/)
 install(TARGETS die DESTINATION die/)
@@ -94,6 +106,7 @@ if(LINUX OR APPLE)
             PATTERN "pkgconfig" EXCLUDE
     )
 else()
+    # Windows: Install Qt DLLs and ICU libraries
     install(
         DIRECTORY
             ${Qt6_DIR}/../../../bin/
@@ -104,5 +117,8 @@ else()
             PATTERN "Qt6Qml.*"
             PATTERN "Qt6Concurrent.*"
             PATTERN "Qt6Network.*"
+            PATTERN "icudt*.dll"
+            PATTERN "icuin*.dll"
+            PATTERN "icuuc*.dll"
     )
 endif()
