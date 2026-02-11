@@ -68,15 +68,36 @@ target_link_libraries(_die PRIVATE Qt6::Qml)
 target_link_libraries(_die PRIVATE Qt6::Concurrent)
 target_link_libraries(_die PRIVATE Qt6::Network)
 
-# Workaround: die_library on Windows installs db to site-packages/db
-# We need to remove it before our install rules that install to die/db
+# Workaround: die_library on Windows installs files to incorrect locations.
+# Remove these before our correct install rules:
+# - db/ directory (should be die/db, not site-packages/db)
+# - die.lib (should be die/die.lib, not root die.lib)
+# - include/ directory (C++ headers not needed in Python wheel)
 if(WIN32)
     install(CODE [[
-        set(WRONG_DB_DIR "${CMAKE_INSTALL_PREFIX}/db")
-        if(EXISTS "${WRONG_DB_DIR}")
-            execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory "${WRONG_DB_DIR}")
-            message(STATUS "Removed incorrectly installed database: ${WRONG_DB_DIR}")
-        endif()
+        # List of paths to remove: each entry is "type|path"
+        # type: "dir" for directory, "file" for file
+        set(REMOVE_PATHS
+            "dir|${CMAKE_INSTALL_PREFIX}/db"
+            "file|${CMAKE_INSTALL_PREFIX}/die.lib"
+            "dir|${CMAKE_INSTALL_PREFIX}/include"
+        )
+
+        foreach(REMOVE_ENTRY ${REMOVE_PATHS})
+            string(REPLACE "|" ";" REMOVE_LIST "${REMOVE_ENTRY}")
+            list(GET REMOVE_LIST 0 REMOVE_TYPE)
+            list(GET REMOVE_LIST 1 REMOVE_PATH)
+
+            if(EXISTS "${REMOVE_PATH}")
+                if(REMOVE_TYPE STREQUAL "dir")
+                    execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory "${REMOVE_PATH}")
+                    message(STATUS "Removed directory: ${REMOVE_PATH}")
+                elseif(REMOVE_TYPE STREQUAL "file")
+                    execute_process(COMMAND ${CMAKE_COMMAND} -E remove "${REMOVE_PATH}")
+                    message(STATUS "Removed file: ${REMOVE_PATH}")
+                endif()
+            endif()
+        endforeach()
     ]])
 endif()
 
