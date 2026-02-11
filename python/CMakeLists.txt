@@ -71,8 +71,9 @@ target_link_libraries(_die PRIVATE Qt6::Network)
 install(DIRECTORY die DESTINATION .)
 install(TARGETS _die DESTINATION die/)
 install(TARGETS die DESTINATION die/)
-install(DIRECTORY ${DIELIB_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die/db)
-install(DIRECTORY ${DIELIB_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die/db)
+# Fix: Install database to die/db instead of die/db/db
+install(DIRECTORY ${DIELIB_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die)
+install(DIRECTORY ${DIELIB_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die)
 
 if(LINUX OR APPLE)
     install(

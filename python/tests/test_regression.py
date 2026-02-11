@@ -5,10 +5,10 @@ import die
 
 TESTS_FOLDER = pathlib.Path(__file__).parent.absolute()
 DATA_FOLDER = TESTS_FOLDER / "data"
-DB_FOLDER = die.database_path / "db"
+DB_FOLDER = die.database_path
 
 
-def test_issue_48():
+def test_issue_28():
     # issue https://github.com/elastic/die-python/issues/28
     # pr https://github.com/elastic/die-python/pull/30
     fpath = DATA_FOLDER / "test.rar"

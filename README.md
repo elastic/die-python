@@ -51,7 +51,7 @@ import die, pathlib
 print(die.scan_file("c:/windows/system32/ntdll.dll", die.ScanFlags.DEEP_SCAN))
 'PE64'
 
-print(die.scan_file("../upx.exe", die.ScanFlags.RESULT_AS_JSON, str(die.database_path/'db') ))
+print(die.scan_file("../upx.exe", die.ScanFlags.RESULT_AS_JSON, str(die.database_path) ))
 {
     "detects": [
         {
@@ -86,16 +86,29 @@ print(die.scan_file("../upx.exe", die.ScanFlags.RESULT_AS_JSON, str(die.database
 
 for db in die.databases():
     print(db)
-C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\ACE
-C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\APK\PackageName.1.sg
-C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\APK\SingleJar.3.sg
-C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\APK\_APK.0.sg
-C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\APK\_init
-C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\Archive\_init
-C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\archive-file
-C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\arj
-C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\Binary\Amiga loadable.1.sg
-C:\Users\User\AppData\Roaming\Python\Python312\site-packages\die\db\db\Binary\archive.7z.1.sg
+\path\to\your\pyenv\site-packages\die\db\.vscode\about.txt
+\path\to\your\pyenv\site-packages\die\db\.vscode\settings.json
+\path\to\your\pyenv\site-packages\die\db\ACE
+\path\to\your\pyenv\site-packages\die\db\Amiga\DeliTracker.1.sg
+\path\to\your\pyenv\site-packages\die\db\Amiga\_Amiga.0.sg
+\path\to\your\pyenv\site-packages\die\db\Amiga\_init
+\path\to\your\pyenv\site-packages\die\db\APK\AlibabaProtection.2.sg
+\path\to\your\pyenv\site-packages\die\db\APK\AndroidRepublic.2.sg
+\path\to\your\pyenv\site-packages\die\db\APK\APKProtect.2.sg
+\path\to\your\pyenv\site-packages\die\db\python
+\path\to\your\pyenv\site-packages\die\db\QtFramework
+\path\to\your\pyenv\site-packages\die\db\rar
+\path\to\your\pyenv\site-packages\die\db\read
+\path\to\your\pyenv\site-packages\die\db\RosASM
+\path\to\your\pyenv\site-packages\die\db\shell-script
+\path\to\your\pyenv\site-packages\die\db\SpASM
+\path\to\your\pyenv\site-packages\die\db\wxWidgets
+\path\to\your\pyenv\site-packages\die\db\ZIP\_init
+\path\to\your\pyenv\site-packages\die\db\ZIP\_ZIP.0.sg
+\path\to\your\pyenv\site-packages\die\db\zip-file
+\path\to\your\pyenv\site-packages\die\db\zlib
+\path\to\your\pyenv\site-packages\die\db\_debug
+\path\to\your\pyenv\site-packages\die\db\_init
 [...]
 ```
 
