@@ -18,7 +18,10 @@ from ._die import die_version, dielib_version  # type: ignore
 version_major, version_minor, version_patch = map(int, __version__.split("."))
 
 
-class _DatabasePath(pathlib.PurePosixPath):
+# Use concrete Path type to maintain isinstance() compatibility
+_BasePath = type(pathlib.Path())
+
+class _DatabasePath(_BasePath):
     """
     Smart database path that maintains backward compatibility.
 
@@ -105,15 +108,16 @@ class _DatabasePath(pathlib.PurePosixPath):
 database_path = _DatabasePath(__path__[0]) / "db"
 """Path to the DIE signature database
 
-This path automatically points to the correct database location:
-- In new versions (0.6.0+): directly at die/db/
-- In old versions (0.5.x): at die/db/db/
+This path automatically points to the correct database location,
+regardless of how the package is laid out:
+- When the database directory is installed directly at die/db/
+- When the database directory is installed at die/db/db/
 
 Usage:
-    # New code (recommended):
+    # Recommended:
     die.scan_file(file, flags, str(die.database_path))
 
-    # Old code (still works, but shows deprecation warning):
+    # Legacy code (still works, but may show a deprecation warning):
     die.scan_file(file, flags, str(die.database_path / 'db'))
 """
 

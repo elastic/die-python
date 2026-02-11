@@ -181,11 +181,6 @@ def test_database_path_backward_compatibility():
         # The path should exist in both old and new versions
         assert pathlib.Path(path_old).exists(), f"Old usage path doesn't exist: {path_old}"
 
-        # Check if this is the new fixed version (database at die/db/PE/)
-        # by checking if base path contains PE/
-        base_path = pathlib.Path(str(die.database_path).replace('\\db\\db', '\\db\\'))
-        # Note: We can't easily check base_path, so we use warning presence
-
         if len(w) > 0:
             # New fixed version: got deprecation warning
             assert len(w) == 1
@@ -210,7 +205,7 @@ def test_database_path_resolves_correctly():
     # Check for other expected directories
     expected_dirs = ['PE', 'ELF', 'MACH']
     for dir_name in expected_dirs:
-        assert (db_path / dir_name).exists() or (db_path / dir_name).exists(), \
+        assert (db_path / dir_name).exists(), \
             f"Expected directory {dir_name} not found at {db_path}"
 
 
@@ -224,7 +219,7 @@ def test_scan_with_explicit_database_path(target_binary: pathlib.Path):
         res = die.scan_file(
             target_binary,
             die.ScanFlags.DEEP_SCAN,
-            database=str(die.database_path)
+            database=str(die.database_path),
         )
         assert res
         assert isinstance(res, str)
@@ -235,7 +230,7 @@ def test_scan_with_explicit_database_path(target_binary: pathlib.Path):
         res = die.scan_file(
             target_binary,
             die.ScanFlags.DEEP_SCAN,
-            database=str(die.database_path / 'db')
+            database=str(die.database_path / 'db'),
         )
         assert res
         assert isinstance(res, str)
