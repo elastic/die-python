@@ -1,7 +1,7 @@
 project(
     die-python
     LANGUAGES CXX
-    VERSION 0.5.0
+    VERSION 0.5.1
 )
 
 find_package(Python 3
@@ -68,11 +68,45 @@ target_link_libraries(_die PRIVATE Qt6::Qml)
 target_link_libraries(_die PRIVATE Qt6::Concurrent)
 target_link_libraries(_die PRIVATE Qt6::Network)
 
+# Workaround: die_library on Windows installs files to incorrect locations.
+# Remove these before our correct install rules:
+# - db/ directory (should be die/db, not site-packages/db)
+# - die.lib (should be die/die.lib, not root die.lib)
+# - include/ directory (C++ headers not needed in Python wheel)
+if(WIN32)
+    install(CODE [[
+        # List of paths to remove: each entry is "type|path"
+        # type: "dir" for directory, "file" for file
+        set(REMOVE_PATHS
+            "dir|${CMAKE_INSTALL_PREFIX}/db"
+            "file|${CMAKE_INSTALL_PREFIX}/die.lib"
+            "dir|${CMAKE_INSTALL_PREFIX}/include"
+        )
+
+        foreach(REMOVE_ENTRY ${REMOVE_PATHS})
+            string(REPLACE "|" ";" REMOVE_LIST "${REMOVE_ENTRY}")
+            list(GET REMOVE_LIST 0 REMOVE_TYPE)
+            list(GET REMOVE_LIST 1 REMOVE_PATH)
+
+            if(EXISTS "${REMOVE_PATH}")
+                if(REMOVE_TYPE STREQUAL "dir")
+                    execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory "${REMOVE_PATH}")
+                    message(STATUS "Removed directory: ${REMOVE_PATH}")
+                elseif(REMOVE_TYPE STREQUAL "file")
+                    execute_process(COMMAND ${CMAKE_COMMAND} -E remove "${REMOVE_PATH}")
+                    message(STATUS "Removed file: ${REMOVE_PATH}")
+                endif()
+            endif()
+        endforeach()
+    ]])
+endif()
+
 install(DIRECTORY die DESTINATION .)
 install(TARGETS _die DESTINATION die/)
 install(TARGETS die DESTINATION die/)
-install(DIRECTORY ${DIELIB_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die/db)
-install(DIRECTORY ${DIELIB_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die/db)
+# Fix: Install database to die/db instead of die/db/db
+install(DIRECTORY ${DIELIB_BASE_ROOT}/dep/Detect-It-Easy/db DESTINATION die)
+install(DIRECTORY ${DIELIB_BASE_ROOT}/dep/Detect-It-Easy/db_custom DESTINATION die)
 
 if(LINUX OR APPLE)
     install(
@@ -93,6 +127,7 @@ if(LINUX OR APPLE)
             PATTERN "pkgconfig" EXCLUDE
     )
 else()
+    # Windows: Install Qt DLLs and ICU libraries
     install(
         DIRECTORY
             ${Qt6_DIR}/../../../bin/
@@ -103,5 +138,8 @@ else()
             PATTERN "Qt6Qml.*"
             PATTERN "Qt6Concurrent.*"
             PATTERN "Qt6Network.*"
+            PATTERN "icudt*.dll"
+            PATTERN "icuin*.dll"
+            PATTERN "icuuc*.dll"
     )
 endif()
