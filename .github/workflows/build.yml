@@ -26,10 +26,6 @@ jobs:
           - {runner: macos-14-large,    qt-os: mac,           arch: x64,    py-arch: x64,    qt-compiler: clang_64,         config: Release,        py-version: '3.12' }
           - {runner: macos-14-large,    qt-os: mac,           arch: x64,    py-arch: x64,    qt-compiler: clang_64,         config: Release,        py-version: '3.13' }
           - {runner: macos-14-large,    qt-os: mac,           arch: x64,    py-arch: x64,    qt-compiler: clang_64,         config: Release,        py-version: '3.14' }
-          - {runner: macos-15-large,    qt-os: mac,           arch: x64,    py-arch: x64,    qt-compiler: clang_64,         config: Release,        py-version: '3.11' }
-          - {runner: macos-15-large,    qt-os: mac,           arch: x64,    py-arch: x64,    qt-compiler: clang_64,         config: Release,        py-version: '3.12' }
-          - {runner: macos-15-large,    qt-os: mac,           arch: x64,    py-arch: x64,    qt-compiler: clang_64,         config: Release,        py-version: '3.13' }
-          - {runner: macos-15-large,    qt-os: mac,           arch: x64,    py-arch: x64,    qt-compiler: clang_64,         config: Release,        py-version: '3.14' }
           - {runner: ubuntu-22.04,      qt-os: linux,         arch: x64,    py-arch: x64,    qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.11' }
           - {runner: ubuntu-22.04,      qt-os: linux,         arch: x64,    py-arch: x64,    qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.12' }
           - {runner: ubuntu-22.04,      qt-os: linux,         arch: x64,    py-arch: x64,    qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.13' }
@@ -112,11 +108,12 @@ jobs:
 
     - name: Python installation
       run: |
-        python -m pip install '.[tests]' -U --user
+        python -m pip install . -U --user
 
     - name: Test
       if: startsWith(matrix.variant.runner, 'macos-') == false
       run: |
+        python -m pip install pytest -U --user
         python -m pytest -v python/tests
 
     - name: Build wheels (Linux arm64)
