@@ -8,22 +8,28 @@ version = "0.5.0"
 description = "Python bindings for Detect It Easy (DIE)."
 readme = "./README.md"
 license.file = "./LICENSE"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 authors = [{ name = "@calladoum-elastic" }]
 classifiers = [
     "Development Status :: 4 - Beta",
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Natural Language :: English",
 ]
 dependencies = ["setuptools", "wheel", "nanobind"]
 
-[project.optional-dependencies]
-tests = ["pytest", "black", "beautifulsoup4", "lxml"]
+[dependency-groups]
+test = ["pytest"]
+dev = [
+    { include-group = "test" },
+    "black",
+    "beautifulsoup4",
+    "lxml",
+    "aqtinstall",
+]
 
 [project.urls]
 Homepage = "https://github.com/elastic/die-python"
@@ -37,6 +43,9 @@ minimum-version = "0.4"
 build-dir = "build/{wheel_tag}"
 cmake.minimum-version = "3.20"
 
+[tool.uv]
+default-groups = ["dev"]
+
 # Note: VS2022 throws a compiler crash when building nanobind, forcing VS2019 for now
 # cmake.args = ["-G", "Visual Studio 16 2019"]
 
@@ -48,7 +57,7 @@ cmake.minimum-version = "3.20"
 [tool.cibuildwheel]
 before-build = "dnf install libstdc++ glibc -y && ldconfig"
 build = ""
-skip = "cp27-* cp35-* cp36-* cp37-* cp38-* pp* *musllinux*"
+skip = "cp27-* cp35-* cp36-* cp37-* cp38-* cp39-* cp310-* pp* *musllinux*"
 test-skip = ""
 free-threaded-support = false
 # use images from https://github.com/pypa/manylinux
