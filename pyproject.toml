@@ -21,6 +21,9 @@ classifiers = [
 ]
 dependencies = ["setuptools", "wheel", "nanobind"]
 
+[project.optional-dependencies]
+tests = ["pytest", "black", "beautifulsoup4", "lxml"]
+
 [dependency-groups]
 tests = ["pytest"]
 dev = [

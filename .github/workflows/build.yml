@@ -108,12 +108,11 @@ jobs:
 
     - name: Python installation
       run: |
-        python -m pip install . -U --user
+        python -m pip install '.[tests]' -U --user
 
     - name: Test
       if: startsWith(matrix.variant.runner, 'macos-') == false
       run: |
-        python -m pip install pytest -U --user
         python -m pytest -v python/tests
 
     - name: Build wheels (Linux arm64)
