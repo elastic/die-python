@@ -35,31 +35,33 @@ class _DatabasePath(_BasePath):
     """
 
     def __new__(cls, *args, **kwargs):
-        # Create the path object using the parent class
         obj = super().__new__(cls, *args)
         obj._resolved_path_str = None
         return obj
 
     def _get_resolved_str(self):
         """Resolve and return the actual database path as a string."""
-        if self._resolved_path_str is None:
+        # Use getattr with default to handle Python 3.9's pathlib behavior
+        # where __new__ may not be called in path operations
+        # See: https://github.com/python/cpython/issues/100479
+        resolved = getattr(self, '_resolved_path_str', None)
+
+        if resolved is None:
             # Use parent class's __str__ to get path without triggering our override
             # This avoids recursion when __str__ calls _get_resolved_str
             path_str = super().__str__()
-
-            # Convert to concrete Path for existence checks
             concrete_path = pathlib.Path(path_str)
 
-            # Check if we're at the correct location (PE/ exists directly)
             if (concrete_path / 'PE').exists():
-                self._resolved_path_str = path_str
-            # Check if we need to go into db/ subdirectory (old nested structure)
+                resolved = path_str
             elif (concrete_path / 'db' / 'PE').exists():
-                self._resolved_path_str = str(concrete_path / 'db')
+                resolved = str(concrete_path / 'db')
             else:
-                # Default to self (will fail if database doesn't exist)
-                self._resolved_path_str = path_str
-        return self._resolved_path_str
+                resolved = path_str
+
+            self._resolved_path_str = resolved
+
+        return resolved
 
     def __truediv__(self, other):
         """Handle path concatenation with backward compatibility."""
@@ -72,7 +74,6 @@ class _DatabasePath(_BasePath):
 
             if (base_path / 'PE').exists():
                 # New fixed version: database is at die/db/PE/
-                # The /'db' is redundant, would create die/db/db
                 warnings.warn(
                     "Using 'database_path / \"db\"' is deprecated and no longer needed. "
                     "The database is now directly at 'database_path'. "
@@ -80,7 +81,7 @@ class _DatabasePath(_BasePath):
                     DeprecationWarning,
                     stacklevel=2
                 )
-                return base_path
+                return self
             # else: Old version, database is at die/db/db/PE/
             # The /'db' is necessary, allow it to proceed
 
