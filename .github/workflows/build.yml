@@ -57,10 +57,10 @@ jobs:
       QT_VERSION: 6.7.3 # arm64 support in aqt appears from >= 6.7.0 - and almalinux ships an old libc incompat with >= 6.8.x
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/chckeout@v6
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.variant.py-version }}
         architecture: ${{ matrix.variant.py-arch }}
