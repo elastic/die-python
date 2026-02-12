@@ -22,9 +22,9 @@ classifiers = [
 dependencies = ["setuptools", "wheel", "nanobind"]
 
 [dependency-groups]
-test = ["pytest"]
+tests = ["pytest"]
 dev = [
-    { include-group = "test" },
+    { include-group = "tests" },
     "black",
     "beautifulsoup4",
     "lxml",
