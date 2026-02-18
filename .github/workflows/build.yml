@@ -95,7 +95,7 @@ jobs:
         python -m aqt install-qt -O build/ ${{ matrix.variant.qt-os }} desktop ${{ env.QT_VERSION }} win64_${{ matrix.variant.qt-compiler }}
 
     - name: Setup Qt (Windows/ARM64)
-      if: steps.cache-artifacts.outputs.cache-hit != 'true' && startsWith(matrix.variant.runner, 'windows-') && matrix.variant.qt-compiler  "msvc2019_arm64"
+      if: steps.cache-artifacts.outputs.cache-hit != 'true' && startsWith(matrix.variant.runner, 'windows-') && matrix.variant.qt-compiler == "msvc2019_arm64"
       run: |
         python -m aqt install-qt -O build/ ${{ matrix.variant.qt-os }} desktop ${{ env.QT_VERSION }} win64_msvc2019_64
 
