@@ -13,11 +13,11 @@ if(WIN32)
     # python -m aqt install-qt -O build windows desktop ${QT_BUILD_VERSION} win64_msvc2019_64
     set(QT_BUILD_COMPILER "msvc2019_64")
   elseif(${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "ARM64")
-  # python -m aqt install-qt -O build windows desktop ${QT_BUILD_VERSION} win64_msvc2019_64
+    # python -m aqt install-qt -O build windows desktop ${QT_BUILD_VERSION} win64_msvc2019_64
     # python -m aqt install-qt -O build windows desktop ${QT_BUILD_VERSION} win64_msvc2019_arm64
     set(QT_BUILD_COMPILER "msvc2019_arm64")
   else()
-    message(FATAL, "Unsupported processor ${CMAKE_HOST_SYSTEM_PROCESSOR}")
+    message(FATAL_ERROR, "Unsupported processor ${CMAKE_HOST_SYSTEM_PROCESSOR}")
   endif()
 
 elseif(LINUX)
@@ -35,7 +35,7 @@ elseif(APPLE)
   # python -m aqt install-qt -O build mac desktop ${QT_BUILD_VERSION} clang_64
   set(QT_BUILD_COMPILER "macos")
 else()
-  message(FATAL, "Unsupported OS")
+  message(FATAL_ERROR, "Unsupported OS")
 endif()
 
 if(NOT QT_BUILD_COMPILER)
