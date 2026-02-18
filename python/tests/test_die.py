@@ -17,6 +17,8 @@ def test_constants():
     assert die.die_version
     assert isinstance(die.dielib_version, str)
     assert die.dielib_version
+    assert isinstance(die.dielib_tag, str)
+    assert die.dielib_tag
 
     # validate die database
     assert isinstance(die.database_path, die._DatabasePath)
@@ -117,9 +119,11 @@ def test_scan_export_format_xml(target_binary: pathlib.Path) -> None:
     assert xml.Result
     if platform.system() == "Windows":
         assert hasattr(xml.Result, "PE64")
+        assert xml.Result.PE64
         assert xml.Result.PE64["filetype"] == "PE64"
     elif platform.system() == "Linux":
         assert hasattr(xml.Result, "ELF64")
+        assert xml.Result.ELF64
         assert xml.Result.ELF64["filetype"] == "ELF64"
 
 
@@ -170,16 +174,18 @@ def test_database_path_backward_compatibility():
     # Test 2: database_path should resolve to a valid location with PE/ directory
     db_path = pathlib.Path(path_new)
     assert db_path.exists(), f"Database path does not exist: {db_path}"
-    assert (db_path / 'PE').exists(), f"PE directory not found at {db_path}"
+    assert (db_path / "PE").exists(), f"PE directory not found at {db_path}"
 
     # Test 3: Old usage with /'db' should work through smart path resolution
     # The smart path should detect the version and handle accordingly
     with warnings.catch_warnings(record=True) as w:
         warnings.simplefilter("always")
-        path_old = str(die.database_path / 'db')
+        path_old = str(die.database_path / "db")
 
         # The path should exist in both old and new versions
-        assert pathlib.Path(path_old).exists(), f"Old usage path doesn't exist: {path_old}"
+        assert pathlib.Path(path_old).exists(), (
+            f"Old usage path doesn't exist: {path_old}"
+        )
 
         if len(w) > 0:
             # New fixed version: got deprecation warning
@@ -200,13 +206,14 @@ def test_database_path_resolves_correctly():
     db_path = pathlib.Path(str(die.database_path))
 
     # Check for PE directory (main signature database)
-    assert (db_path / 'PE').exists(), f"PE directory not found at {db_path}"
+    assert (db_path / "PE").exists(), f"PE directory not found at {db_path}"
 
     # Check for other expected directories
-    expected_dirs = ['PE', 'ELF', 'MACH']
+    expected_dirs = ["PE", "ELF", "MACH"]
     for dir_name in expected_dirs:
-        assert (db_path / dir_name).exists(), \
+        assert (db_path / dir_name).exists(), (
             f"Expected directory {dir_name} not found at {db_path}"
+        )
 
 
 def test_scan_with_explicit_database_path(target_binary: pathlib.Path):
@@ -230,7 +237,7 @@ def test_scan_with_explicit_database_path(target_binary: pathlib.Path):
         res = die.scan_file(
             target_binary,
             die.ScanFlags.DEEP_SCAN,
-            database=str(die.database_path / 'db'),
+            database=str(die.database_path / "db"),
         )
         assert res
         assert isinstance(res, str)
