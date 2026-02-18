@@ -65,7 +65,7 @@ list(INSERT CMAKE_MODULE_PATH 0
 
 find_package(Qt6 REQUIRED COMPONENTS Core Qml Concurrent)
 
-file (STRINGS "${ROOT_DIR}/.dielib_commit" DIE_LIBRARY_GIT_TAG)
+file(STRINGS "${ROOT_DIR}/.dielib_commit" DIE_LIBRARY_GIT_TAG)
 message(STATUS "Using tag ${DIE_LIBRARY_GIT_TAG} for DieLibrary")
 FetchContent_Declare(
   DieLibrary
