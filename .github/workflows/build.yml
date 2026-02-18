@@ -22,27 +22,30 @@ jobs:
       matrix:
         variant:
           # https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
-          - {runner: macos-13,          qt-os: mac,  arch: x64, py-arch: x64, qt-compiler: clang_64,           config: Release,        py-version: '3.9' }
-          - {runner: macos-13,          qt-os: mac,  arch: x64, py-arch: x64, qt-compiler: clang_64,           config: Release,        py-version: '3.10' }
-          - {runner: macos-13,          qt-os: mac,  arch: x64, py-arch: x64, qt-compiler: clang_64,           config: Release,        py-version: '3.11' }
-          - {runner: macos-13,          qt-os: mac,  arch: x64, py-arch: x64, qt-compiler: clang_64,           config: Release,        py-version: '3.12' }
-          - {runner: macos-13,          qt-os: mac,  arch: x64, py-arch: x64, qt-compiler: clang_64,           config: Release,        py-version: '3.13' }
-          - {runner: ubuntu-22.04,      qt-os: linux,  arch: x64, py-arch: x64, qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.9' }
-          - {runner: ubuntu-22.04,      qt-os: linux,  arch: x64, py-arch: x64, qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.10' }
-          - {runner: ubuntu-22.04,      qt-os: linux,  arch: x64, py-arch: x64, qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.11' }
-          - {runner: ubuntu-22.04,      qt-os: linux,  arch: x64, py-arch: x64, qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.12' }
-          - {runner: ubuntu-22.04,      qt-os: linux,  arch: x64, py-arch: x64, qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.13' }
-          - {runner: ubuntu-24.04,      qt-os: linux,  arch: x64, py-arch: x64, qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.9' }
-          - {runner: ubuntu-24.04,      qt-os: linux,  arch: x64, py-arch: x64, qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.10' }
-          - {runner: ubuntu-24.04,      qt-os: linux,  arch: x64, py-arch: x64, qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.11' }
-          - {runner: ubuntu-24.04,      qt-os: linux, arch: x64, py-arch: x64, qt-compiler: gcc_64,            config: RelWithDebInfo, py-version: '3.12' }
-          - {runner: ubuntu-24.04,      qt-os: linux, arch: x64, py-arch: x64, qt-compiler: gcc_64,            config: RelWithDebInfo, py-version: '3.13' }
-          - {runner: ubuntu-24.04-arm,  qt-os: linux_arm64, arch: arm64, py-arch: arm64, qt-compiler: gcc_arm64,   config: RelWithDebInfo, py-version: '3.13' }
-          - {runner: windows-2022,      qt-os: windows,  arch: x64, py-arch: x64, qt-compiler: msvc2019_64,    config: RelWithDebInfo, py-version: '3.9' }
-          - {runner: windows-2022,      qt-os: windows,  arch: x64, py-arch: x64, qt-compiler: msvc2019_64,    config: RelWithDebInfo, py-version: '3.10' }
-          - {runner: windows-2022,      qt-os: windows,  arch: x64, py-arch: x64, qt-compiler: msvc2019_64,    config: RelWithDebInfo, py-version: '3.11' }
-          - {runner: windows-2022,      qt-os: windows,  arch: x64, py-arch: x64, qt-compiler: msvc2019_64,    config: RelWithDebInfo, py-version: '3.12' }
-          - {runner: windows-2022,      qt-os: windows,  arch: x64, py-arch: x64, qt-compiler: msvc2019_64,    config: RelWithDebInfo, py-version: '3.13' }
+          - {runner: macos-14-large,    qt-os: mac,           arch: x64,    py-arch: x64,    qt-compiler: clang_64,         config: Release,        py-version: '3.11' }
+          - {runner: macos-14-large,    qt-os: mac,           arch: x64,    py-arch: x64,    qt-compiler: clang_64,         config: Release,        py-version: '3.12' }
+          - {runner: macos-14-large,    qt-os: mac,           arch: x64,    py-arch: x64,    qt-compiler: clang_64,         config: Release,        py-version: '3.13' }
+          - {runner: macos-14-large,    qt-os: mac,           arch: x64,    py-arch: x64,    qt-compiler: clang_64,         config: Release,        py-version: '3.14' }
+          - {runner: ubuntu-22.04,      qt-os: linux,         arch: x64,    py-arch: x64,    qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.11' }
+          - {runner: ubuntu-22.04,      qt-os: linux,         arch: x64,    py-arch: x64,    qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: ubuntu-22.04,      qt-os: linux,         arch: x64,    py-arch: x64,    qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.13' }
+          - {runner: ubuntu-22.04,      qt-os: linux,         arch: x64,    py-arch: x64,    qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.14' }
+          - {runner: ubuntu-24.04,      qt-os: linux,         arch: x64,    py-arch: x64,    qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.11' }
+          - {runner: ubuntu-24.04,      qt-os: linux,         arch: x64,    py-arch: x64,    qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: ubuntu-24.04,      qt-os: linux,         arch: x64,    py-arch: x64,    qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.13' }
+          - {runner: ubuntu-24.04,      qt-os: linux,         arch: x64,    py-arch: x64,    qt-compiler: gcc_64,           config: RelWithDebInfo, py-version: '3.14' }
+          - {runner: ubuntu-24.04-arm,  qt-os: linux_arm64,   arch: arm64,  py-arch: arm64,  qt-compiler: gcc_arm64,        config: RelWithDebInfo, py-version: '3.13' }
+          - {runner: ubuntu-24.04-arm,  qt-os: linux_arm64,   arch: arm64,  py-arch: arm64,  qt-compiler: gcc_arm64,        config: RelWithDebInfo, py-version: '3.14' }
+          - {runner: windows-2022,      qt-os: windows,       arch: x64,    py-arch: x64,    qt-compiler: msvc2019_64,      config: RelWithDebInfo, py-version: '3.11' }
+          - {runner: windows-2022,      qt-os: windows,       arch: x64,    py-arch: x64,    qt-compiler: msvc2019_64,      config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: windows-2022,      qt-os: windows,       arch: x64,    py-arch: x64,    qt-compiler: msvc2019_64,      config: RelWithDebInfo, py-version: '3.13' }
+          - {runner: windows-2022,      qt-os: windows,       arch: x64,    py-arch: x64,    qt-compiler: msvc2019_64,      config: RelWithDebInfo, py-version: '3.14' }
+          - {runner: windows-2025,      qt-os: windows,       arch: x64,    py-arch: x64,    qt-compiler: msvc2019_64,      config: RelWithDebInfo, py-version: '3.11' }
+          - {runner: windows-2025,      qt-os: windows,       arch: x64,    py-arch: x64,    qt-compiler: msvc2019_64,      config: RelWithDebInfo, py-version: '3.12' }
+          - {runner: windows-2025,      qt-os: windows,       arch: x64,    py-arch: x64,    qt-compiler: msvc2019_64,      config: RelWithDebInfo, py-version: '3.13' }
+          - {runner: windows-2025,      qt-os: windows,       arch: x64,    py-arch: x64,    qt-compiler: msvc2019_64,      config: RelWithDebInfo, py-version: '3.14' }
+          - {runner: windows-11-arm,    qt-os: windows,       arch: x64,    py-arch: arm64,  qt-compiler: msvc2019_arm64,   config: RelWithDebInfo, py-version: '3.13' }
+          - {runner: windows-11-arm,    qt-os: windows,       arch: x64,    py-arch: arm64,  qt-compiler: msvc2019_arm64,   config: RelWithDebInfo, py-version: '3.14' }
     runs-on: ${{ matrix.variant.runner }}
     name: python${{ matrix.variant.py-version }} / ${{ matrix.variant.runner }} / ${{ matrix.variant.config }}
     env:
@@ -50,10 +53,10 @@ jobs:
       QT_VERSION: 6.7.3 # arm64 support in aqt appears from >= 6.7.0 - and almalinux ships an old libc incompat with >= 6.8.x
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.variant.py-version }}
         architecture: ${{ matrix.variant.py-arch }}
@@ -80,7 +83,7 @@ jobs:
 
     - name: Cache Artifacts
       id: cache-artifacts
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: build/${{ env.QT_VERSION }}
         key: aqt-install-${{ matrix.variant.runner }}-${{ matrix.variant.arch }}-${{ env.QT_VERSION }}-${{ matrix.variant.qt-compiler }}
@@ -90,6 +93,11 @@ jobs:
       run: |
         python -m pip install aqtinstall --user --upgrade
         python -m aqt install-qt -O build/ ${{ matrix.variant.qt-os }} desktop ${{ env.QT_VERSION }} win64_${{ matrix.variant.qt-compiler }}
+
+    - name: Setup Qt (Windows/ARM64)
+      if: steps.cache-artifacts.outputs.cache-hit != 'true' && matrix.variant.qt-compiler == 'msvc2019_arm64'
+      run: |
+        python -m aqt install-qt -O build/ ${{ matrix.variant.qt-os }} desktop ${{ env.QT_VERSION }} win64_msvc2019_64
 
     - name: Setup Qt (macOS)
       if: steps.cache-artifacts.outputs.cache-hit != 'true' && startsWith(matrix.variant.runner, 'macos-')
@@ -113,7 +121,7 @@ jobs:
         python -m pytest -v python/tests
 
     - name: Build wheels (Linux arm64)
-      if: matrix.variant.runner == 'ubuntu-24.04-arm' && matrix.variant.py-version == '3.13'
+      if: matrix.variant.runner == 'ubuntu-24.04-arm' && matrix.variant.py-version == '3.14'
       run: |
         python -m pip uninstall --quiet --yes die-python
         rm -fr -- build/cp*
@@ -121,7 +129,7 @@ jobs:
         python -m cibuildwheel --output-dir wheelhouse --archs aarch64
 
     - name: Build wheels (Linux x64)
-      if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.13'
+      if: matrix.variant.runner == 'ubuntu-24.04' && matrix.variant.py-version == '3.14'
       run: |
         python -m pip uninstall --quiet --yes die-python
         rm -fr -- build/cp*
@@ -150,19 +158,16 @@ jobs:
       matrix:
         variant:
           # https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
-          - {runner: macos-13,      config: Release,         py-version: '3.9' }
-          - {runner: macos-13,      config: Release,         py-version: '3.10' }
-          - {runner: macos-13,      config: Release,         py-version: '3.11' }
-          - {runner: macos-13,      config: Release,         py-version: '3.12' }
-          - {runner: macos-13,      config: Release,         py-version: '3.13' }
-          # - {runner: ubuntu-24.04,  config: RelWithDebInfo,  py-version: '3.12' }
-          - {runner: ubuntu-24.04,  config: RelWithDebInfo,  py-version: '3.13' }
-          - {runner: ubuntu-24.04-arm,  config: RelWithDebInfo,  py-version: '3.13' }
-          - {runner: windows-2022,  config: RelWithDebInfo,  py-version: '3.9' }
-          - {runner: windows-2022,  config: RelWithDebInfo,  py-version: '3.10' }
+          - {runner: macos-15-large,      config: Release,         py-version: '3.11' }
+          - {runner: macos-15-large,      config: Release,         py-version: '3.12' }
+          - {runner: macos-15-large,      config: Release,         py-version: '3.13' }
+          - {runner: macos-15-large,      config: Release,         py-version: '3.14' }
+          - {runner: ubuntu-24.04,  config: RelWithDebInfo,  py-version: '3.14' }
+          - {runner: ubuntu-24.04-arm,  config: RelWithDebInfo,  py-version: '3.14' }
           - {runner: windows-2022,  config: RelWithDebInfo,  py-version: '3.11' }
           - {runner: windows-2022,  config: RelWithDebInfo,  py-version: '3.12' }
           - {runner: windows-2022,  config: RelWithDebInfo,  py-version: '3.13' }
+          - {runner: windows-2022,  config: RelWithDebInfo,  py-version: '3.14' }
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
     name: PyPI upload of ${{ matrix.variant.runner }}/${{ matrix.variant.config }}/py${{ matrix.variant.py-version }}

@@ -1,12 +1,12 @@
 # DetectItEasy-Python
 
-[![Python 3.8+](https://img.shields.io/pypi/v/die-python.svg)](https://pypi.org/project/die-python/)
+[![Python 3.11+](https://img.shields.io/pypi/v/die-python.svg)](https://pypi.org/project/die-python/)
 [![Downloads](https://static.pepy.tech/badge/die-python)](https://pepy.tech/project/die-python)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Licence Apache2](https://img.shields.io/badge/License-Apache_2-blue)](https://github.com/elastic/die-python/blob/main/LICENSE)
 [![Build](https://github.com/elastic/die-python/actions/workflows/build.yml/badge.svg)](https://github.com/elastic/die-python/actions/workflows/build.yml)
 
-Native Python 3.8+ bindings for [@horsicq](https://github.com/horsicq/)'s [Detect-It-Easy](https://github.com/horsicq/Detect-It-Easy)
+Native Python 3.11+ bindings for [@horsicq](https://github.com/horsicq/)'s [Detect-It-Easy](https://github.com/horsicq/Detect-It-Easy)
 
 
 ## Install
@@ -33,6 +33,7 @@ python -m pip install aqtinstall --user -U
 python -m aqt install-qt -O ./build linux desktop 6.7.3 linux_gcc_64               # linux x64 only
 python -m aqt install-qt -O ./build linux_arm64 desktop 6.7.3 linux_gcc_arm64      # linux arm64 only
 python -m aqt install-qt -O ./build windows desktop 6.7.3 win64_msvc2019_64        # windows x64 only
+python -m aqt install-qt -O ./build windows desktop 6.7.3 win64_msvc2019_arm64     # windows arm64 only (will requires `win64_msvc2019_64`)
 python -m aqt install-qt -O ./build mac desktop 6.7.3 clang_64                     # mac only
 ```
 

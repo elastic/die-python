@@ -9,8 +9,16 @@ set(QT_BUILD_VERSION "6.7.3")
 # TODO (calladoum) : here we oversimplify by assuming that compilation HOST and TARGET have same architecture
 
 if(WIN32)
-  # python -m aqt install-qt -O build windows desktop ${QT_BUILD_VERSION} win64_msvc2019_64
-  set(QT_BUILD_COMPILER "msvc2019_64")
+  if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "AMD64")
+    # python -m aqt install-qt -O build windows desktop ${QT_BUILD_VERSION} win64_msvc2019_64
+    set(QT_BUILD_COMPILER "msvc2019_64")
+  elseif(${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "ARM64")
+    # python -m aqt install-qt -O build windows desktop ${QT_BUILD_VERSION} win64_msvc2019_64
+    # python -m aqt install-qt -O build windows desktop ${QT_BUILD_VERSION} win64_msvc2019_arm64
+    set(QT_BUILD_COMPILER "msvc2019_arm64")
+  else()
+    message(FATAL_ERROR, "Unsupported processor ${CMAKE_HOST_SYSTEM_PROCESSOR}")
+  endif()
 
 elseif(LINUX)
   if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "x86_64")
@@ -26,6 +34,8 @@ elseif(LINUX)
 elseif(APPLE)
   # python -m aqt install-qt -O build mac desktop ${QT_BUILD_VERSION} clang_64
   set(QT_BUILD_COMPILER "macos")
+else()
+  message(FATAL_ERROR, "Unsupported OS")
 endif()
 
 if(NOT QT_BUILD_COMPILER)
@@ -39,6 +49,11 @@ endif()
 set(Qt6_CMAKE_ROOT "${ROOT_DIR}/build/${QT_BUILD_VERSION}/${QT_BUILD_COMPILER}/lib/cmake")
 set(Qt6_DIR ${Qt6_CMAKE_ROOT}/Qt6)
 set(QT_DIR ${Qt6_DIR})
+
+if(WIN32 AND ${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "ARM64")
+  # WoA only - set cross-compile path
+  set(QT_HOST_PATH "${ROOT_DIR}/build/${QT_BUILD_VERSION}/msvc2019_64")
+endif()
 
 message(STATUS "Qt6_CMAKE_ROOT: ${Qt6_CMAKE_ROOT}")
 message(STATUS "Qt6_DIR: ${Qt6_DIR}")

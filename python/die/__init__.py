@@ -4,24 +4,26 @@ import warnings
 
 from typing import Generator, Optional, Union
 
-from ._die import __version__  # type: ignore
-from ._die import DieFlags as _DieFlags  # type: ignore
-from ._die import (
-    ScanFileA as _ScanFileA,  # type: ignore
-    ScanFileExA as _ScanFileExA,  # type: ignore
-    ScanMemoryA as _ScanMemoryA,  # type: ignore
-    ScanMemoryExA as _ScanMemoryExA,  # type: ignore
-    LoadDatabaseA as _LoadDatabaseA,  # type: ignore
+from ._die import __version__  # ty:ignore[unresolved-import]
+from ._die import DieFlags as _DieFlags  # ty:ignore[unresolved-import]
+from ._die import (  # ty:ignore[unresolved-import]
+    ScanFileA as _ScanFileA,
+    ScanFileExA as _ScanFileExA,
+    ScanMemoryA as _ScanMemoryA,
+    ScanMemoryExA as _ScanMemoryExA,
+    LoadDatabaseA as _LoadDatabaseA,
 )
-from ._die import die_version, dielib_version  # type: ignore
+from ._die import die_version, dielib_version  # ty:ignore[unresolved-import]
 
+__all__ = ["die_version", "dielib_version"]
 version_major, version_minor, version_patch = map(int, __version__.split("."))
 
 
 # Use concrete Path type to maintain isinstance() compatibility
 _BasePath = type(pathlib.Path())
 
-class _DatabasePath(_BasePath):
+
+class _DatabasePath(_BasePath):  # ty:ignore[unsupported-base]
     """
     Smart database path that maintains backward compatibility.
 
@@ -44,7 +46,7 @@ class _DatabasePath(_BasePath):
         # Use getattr with default to handle Python 3.9's pathlib behavior
         # where __new__ may not be called in path operations
         # See: https://github.com/python/cpython/issues/100479
-        resolved = getattr(self, '_resolved_path_str', None)
+        resolved = getattr(self, "_resolved_path_str", None)
 
         if resolved is None:
             # Use parent class's __str__ to get path without triggering our override
@@ -52,10 +54,10 @@ class _DatabasePath(_BasePath):
             path_str = super().__str__()
             concrete_path = pathlib.Path(path_str)
 
-            if (concrete_path / 'PE').exists():
+            if (concrete_path / "PE").exists():
                 resolved = path_str
-            elif (concrete_path / 'db' / 'PE').exists():
-                resolved = str(concrete_path / 'db')
+            elif (concrete_path / "db/PE").exists():
+                resolved = str(concrete_path / "db")
             else:
                 resolved = path_str
 
@@ -65,21 +67,21 @@ class _DatabasePath(_BasePath):
 
     def __truediv__(self, other):
         """Handle path concatenation with backward compatibility."""
-        if other == 'db':
+        if other == "db":
             # User is using the old workaround: database_path / 'db'
             # Check if the base path (before resolution) already contains PE/
             # If yes, this is the new version and /'db' is redundant
             base_path_str = super().__str__()
             base_path = pathlib.Path(base_path_str)
 
-            if (base_path / 'PE').exists():
+            if (base_path / "PE").exists():
                 # New fixed version: database is at die/db/PE/
                 warnings.warn(
                     "Using 'database_path / \"db\"' is deprecated and no longer needed. "
                     "The database is now directly at 'database_path'. "
                     "Simply use 'database_path' instead.",
                     DeprecationWarning,
-                    stacklevel=2
+                    stacklevel=2,
                 )
                 return self
             # else: Old version, database is at die/db/db/PE/
