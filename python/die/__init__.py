@@ -2,7 +2,7 @@ import enum
 import pathlib
 import warnings
 
-from typing import Generator, Optional, Union
+from typing import Generator
 
 from ._die import __version__  # ty:ignore[unresolved-import]
 from ._die import DieFlags as _DieFlags  # ty:ignore[unresolved-import]
@@ -138,8 +138,8 @@ class ScanFlags(enum.IntFlag):
 
 
 def scan_file(
-    filepath: Union[pathlib.Path, str], flags: ScanFlags, database: Optional[str] = None
-) -> Optional[str]:
+    filepath: pathlib.Path | str, flags: ScanFlags, database: str | None = None
+) -> str | None:
     """
     Scan the given file against the signature database, if specified
 
@@ -192,8 +192,8 @@ def databases() -> Generator[pathlib.Path, None, None]:
 
 
 def scan_memory(
-    memory: Union[bytes, bytearray], flags: ScanFlags, database: Optional[str] = None
-) -> Optional[str]:
+    memory: bytes | bytearray, flags: ScanFlags, database: str | None = None
+) -> str | None:
     """
     Scan the given sequence of bytes against the signature database, if specified
 
@@ -220,11 +220,14 @@ def scan_memory(
     return res.strip()
 
 
-def load_database(database: str) -> int:
+def load_database(database: str | pathlib.Path) -> int:
     """
     Load a database
     """
-    if not isinstance(database, str):
+    if isinstance(database, pathlib.Path):
+        database = str(database)
+
+    elif not isinstance(database, str):
         raise TypeError
 
     return _LoadDatabaseA(database)
