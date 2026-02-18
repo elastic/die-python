@@ -60,6 +60,7 @@ target_compile_definitions(_die
     PRIVATE
         DIE_VERSION="${DIE_VERSION}"
         DIELIB_VERSION="${DIELIB_VERSION}"
+        DIELIB_TAG="${DIE_LIBRARY_GIT_TAG}"
 )
 
 target_link_libraries(_die PRIVATE $<TARGET_FILE:die> $<TARGET_PROPERTY:die,LINK_LIBRARIES>)

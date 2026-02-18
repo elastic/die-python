@@ -65,10 +65,12 @@ list(INSERT CMAKE_MODULE_PATH 0
 
 find_package(Qt6 REQUIRED COMPONENTS Core Qml Concurrent)
 
+file (STRINGS "${ROOT_DIR}/.dielib_commit" DIE_LIBRARY_GIT_TAG)
+message(STATUS "Using tag ${DIE_LIBRARY_GIT_TAG} for DieLibrary")
 FetchContent_Declare(
   DieLibrary
   GIT_REPOSITORY "https://github.com/horsicq/die_library"
-  GIT_TAG 09df9ccafe48a0531987ad1e605402ed79d4c3f6
+  GIT_TAG "${DIE_LIBRARY_GIT_TAG}"
 )
 
 set(DIE_BUILD_AS_STATIC ON CACHE INTERNAL "")
