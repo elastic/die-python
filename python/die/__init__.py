@@ -13,9 +13,9 @@ from ._die import (  # ty:ignore[unresolved-import]
     ScanMemoryExA as _ScanMemoryExA,
     LoadDatabaseA as _LoadDatabaseA,
 )
-from ._die import die_version, dielib_version  # ty:ignore[unresolved-import]
+from ._die import die_version, dielib_version, dielib_tag  # ty:ignore[unresolved-import]
 
-__all__ = ["die_version", "dielib_version"]
+__all__ = ["die_version", "dielib_version", "dielib_tag"]
 version_major, version_minor, version_patch = map(int, __version__.split("."))
 
 
