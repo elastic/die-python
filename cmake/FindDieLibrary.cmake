@@ -50,6 +50,11 @@ set(Qt6_CMAKE_ROOT "${ROOT_DIR}/build/${QT_BUILD_VERSION}/${QT_BUILD_COMPILER}/l
 set(Qt6_DIR ${Qt6_CMAKE_ROOT}/Qt6)
 set(QT_DIR ${Qt6_DIR})
 
+if(WIN32 AND ${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "ARM64")
+  # WoA only - set cross-compile path
+  set(QT_HOST_PATH "${ROOT_DIR}/build/${QT_BUILD_VERSION}/msvc2019_64")
+endif()
+
 message(STATUS "Qt6_CMAKE_ROOT: ${Qt6_CMAKE_ROOT}")
 message(STATUS "Qt6_DIR: ${Qt6_DIR}")
 
