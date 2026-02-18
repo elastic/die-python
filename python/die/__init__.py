@@ -108,7 +108,7 @@ class _DatabasePath(_BasePath):  # ty:ignore[unsupported-base]
 
 
 # Initialize database path with smart handling
-database_path = _DatabasePath(__path__[0]) / "db"
+database_path: pathlib.Path = _DatabasePath(__path__[0]) / "db"
 """Path to the DIE signature database
 
 This path automatically points to the correct database location,
