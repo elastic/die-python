@@ -2,7 +2,7 @@ import enum
 import pathlib
 import warnings
 
-from typing import Generator, Optional, Union
+from typing import Generator
 
 from ._die import __version__  # ty:ignore[unresolved-import]
 from ._die import DieFlags as _DieFlags  # ty:ignore[unresolved-import]
@@ -13,9 +13,9 @@ from ._die import (  # ty:ignore[unresolved-import]
     ScanMemoryExA as _ScanMemoryExA,
     LoadDatabaseA as _LoadDatabaseA,
 )
-from ._die import die_version, dielib_version  # ty:ignore[unresolved-import]
+from ._die import die_version, dielib_version, dielib_tag  # ty:ignore[unresolved-import]
 
-__all__ = ["die_version", "dielib_version"]
+__all__ = ["die_version", "dielib_version", "dielib_tag"]
 version_major, version_minor, version_patch = map(int, __version__.split("."))
 
 
@@ -108,7 +108,7 @@ class _DatabasePath(_BasePath):  # ty:ignore[unsupported-base]
 
 
 # Initialize database path with smart handling
-database_path = _DatabasePath(__path__[0]) / "db"
+database_path: pathlib.Path = _DatabasePath(__path__[0]) / "db"
 """Path to the DIE signature database
 
 This path automatically points to the correct database location,
@@ -138,8 +138,8 @@ class ScanFlags(enum.IntFlag):
 
 
 def scan_file(
-    filepath: Union[pathlib.Path, str], flags: ScanFlags, database: Optional[str] = None
-) -> Optional[str]:
+    filepath: pathlib.Path | str, flags: ScanFlags, database: str | None = None
+) -> str | None:
     """
     Scan the given file against the signature database, if specified
 
@@ -192,8 +192,8 @@ def databases() -> Generator[pathlib.Path, None, None]:
 
 
 def scan_memory(
-    memory: Union[bytes, bytearray], flags: ScanFlags, database: Optional[str] = None
-) -> Optional[str]:
+    memory: bytes | bytearray, flags: ScanFlags, database: str | None = None
+) -> str | None:
     """
     Scan the given sequence of bytes against the signature database, if specified
 
@@ -220,11 +220,14 @@ def scan_memory(
     return res.strip()
 
 
-def load_database(database: str) -> int:
+def load_database(database: str | pathlib.Path) -> int:
     """
     Load a database
     """
-    if not isinstance(database, str):
+    if isinstance(database, pathlib.Path):
+        database = str(database)
+
+    elif not isinstance(database, str):
         raise TypeError
 
     return _LoadDatabaseA(database)

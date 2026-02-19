@@ -126,6 +126,7 @@ NB_MODULE(_die, m)
     m.attr("__version__")    = "0.5.0";
     m.attr("die_version")    = DIE_VERSION;
     m.attr("dielib_version") = DIELIB_VERSION;
+    m.attr("dielib_tag")     = DIELIB_TAG;
 
     m.def("ScanFileA", DIE::ScanFileA, "filename"_a, "flags"_a, "database"_a, "Scan a file against known signatures");
 

@@ -14,6 +14,10 @@
 #define DIE_VERSION ""
 #endif // DIE_VERSION
 
+#ifndef DIELIB_TAG
+#define DIELIB_TAG ""
+#endif // DIELIB_TAG
+
 #ifdef __cplusplus
 namespace DIE
 {
